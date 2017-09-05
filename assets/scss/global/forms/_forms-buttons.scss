@@ -1,0 +1,344 @@
+.inline-buttons{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+a.close{
+  background: none;
+  border: $border-width solid $grey5;
+  border-radius: 100%;
+  color: $grey2;
+  font-weight: $font-weight-normal;
+  line-height:1;
+  height: 20px;
+  width:20px;
+  padding: 4px;
+  margin: 0;
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    background: $grey5;
+    border-radius: 2px;
+    position: absolute;
+    height:10px;
+    width: 2px;
+    left: 8px;
+    top: 4px;
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
+}
+@media only screen and ($mq-small) {
+  .inline-buttons{
+    & > *{
+      margin-bottom: 10px;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+@media only screen and ($mq-xsmall) {
+  .inline-buttons{
+    & > *{
+      margin-bottom: 4px;
+      width:49%;
+      &:nth-child(odd) {
+        margin-right:1%;
+      }
+    }
+  }
+}
+
+[role="button"],
+input[type="submit"],
+input[type="button"],
+button{
+  background: $color-primary;
+  color:$white;
+  display: inline-block;
+  flex-grow: 0;
+  margin-bottom: 20px;
+  font-weight: $font-weight-bold;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: none;
+  padding: 10px 20px;
+  vertical-align: middle;
+  touch-action: manipulation;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: all 0.1s $ease-out-quint;
+  z-index: 0;
+  &:after{
+    display: block;
+    content: "";
+    height:0%;
+    width:0%;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transition: 0.6s $ease-out-quint;
+    z-index: -1;
+  }
+  &:not(.btn-tiny){
+    &:before{
+      margin-right:10px;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.focus {
+    /* outline: thin dotted;
+    // WebKit
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px; */
+
+    text-decoration: none;
+    color:$white;
+    &:not(.close){
+      &:after{
+        left: 0;
+        top:0;
+        height:100%;
+        width:100%;
+      }
+    }
+  }
+
+  &:active{
+    outline: 0;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  &.disabled,
+  &[disabled]{
+    //background:$grey7 !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none; // Future-proof disabling of clicks
+    //opacity: .65;
+    box-shadow: none;
+  }
+}
+i[role="button"]{
+  cursor: default;
+  &.btn-tiny{
+    &:hover{
+      transform: scale(1);
+    }
+  }
+}
+
+form{
+  &.loading{
+    .btn-round{
+      animation: 1s linear 0s normal none infinite running rotate;
+      &:before{
+        content: "\e8da";
+        @include font-size(3);
+      }
+    }
+  }
+  &.success{
+    [role="button"]{
+      background: $color-success;
+      &:before{
+        content: "\e934";
+        @include font-size(2.6);
+        animation: slide-from-bottom 0.2s ease-out;
+      }
+    }
+  }
+  &.error{
+    [role="button"]{
+      background: $color-error;
+      &:before{
+        content: "\e955";
+        @include font-size(2.6);
+        animation: slide-from-top 0.4s ease-out;
+      }
+    }
+  }
+}
+
+@media only screen and ($mq-xsmall) {
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  button {
+    width:100%;
+  }
+}
+
+
+input[type="submit"],
+input[type="button"],
+button{
+  float:right;
+  &.btn-cancel{
+    margin-right:40px;
+  }
+}
+
+
+/*********************
+BUTTONS
+*********************/
+a[role="button"]{
+  &.btn-round{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+  }
+}
+[role="button"],
+button{
+  font-family: $font-header;
+  &.btn-primary{
+    background:$color-primary;
+    &:after{
+      background: lighten($color-primary, 10);
+    }
+  }
+  &.btn-secondary{
+    background:$color-secondary;
+    &:after{
+      background: lighten($color-secondary, 2);
+    }
+  }
+  &.btn-tertiary{
+    background: $grey7;
+    border: 1px solid $grey6;
+    color:$grey3;
+    &:after{
+      background: $grey8;
+    }
+  }
+  &.btn-dark{
+    background: $grey2;
+    &:after{
+      background: $grey3;
+    }
+  }
+  &.btn-warning{
+    background: $color-tertiary;
+    border: 1px solid darken($color-tertiary, 4);
+  }
+  &.btn-danger{
+    background: $color-danger;
+    border: 1px solid darken($color-danger, 4);
+  }
+  &.btn-approve{
+    background: $color-success;
+  }
+  &.btn-clear{
+    background: rgba(0, 0, 0, 0.0);
+    color:$grey2;
+    border: 1px solid $grey6;
+    &:after{
+      background: rgba(255, 255, 255, 0.2);
+    }
+    &:hover,
+    &:focus,
+    &.focus {
+
+    }
+  }
+  &.btn-lg{
+    padding: 10px 40px;
+    @include font-size(3);
+    transition: all 0.2s $ease-out-quint;
+    &.btn-clear{
+      padding: 7px 40px;
+      &:hover,
+      &:focus,
+      &.focus {
+        color:$white;
+      }
+    }
+  }
+  &.btn-sm{
+    padding: 4px 10px;
+    @include font-size(1);
+    border-radius: 30px;
+    &:after{
+      border-radius: 30px;
+    }
+    i{
+      @include font-size(1.8);
+    }
+  }
+  &.btn-xs{
+    border-radius: 100%;
+    text-align: center;
+    line-height: 1;
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+    margin-right:4px;
+    @include font-size(1.4);
+    &:after{
+      border-radius: 100%;
+    }
+    &:hover{
+      transform: scale(1.2);
+    }
+  }
+  &.active{
+    background:$color-primary;
+    border-color: lighten($color-primary, 10);
+    &:after{
+      background: lighten($color-primary, 10);
+    }
+  }
+  &.btn-block{
+    width:100%;
+  }
+
+  &.icon-button{
+    display: flex;
+    i{
+      margin:0 !important;
+    }
+  }
+  // INNER ICONS
+  i{
+    //float: left;
+    margin-right: 4px;
+    &.icon-loading{
+      display: none;
+    }
+  }
+  &.btn-small{
+    i{
+      margin-top: 2px;
+    }
+  }
+}
+
+// BUTTONS WITH ADDONS
+[role="button"].inner-addon{
+  padding:0;
+  & > div{
+    float: left;
+  }
+  .addon{
+    background: $grey6;
+    padding: 13px 5px 13px 5px;
+    @include font-size(1.1);
+  }
+}

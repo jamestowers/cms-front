@@ -1,0 +1,93 @@
+@import "forms-text-fields";
+@import "forms-buttons";
+@import "forms-checkboxes";
+@import "forms-dropdowns";
+@import "forms-radio-buttons";
+@import "forms-file";
+@import "vue-multi-select";
+
+/*********************
+FORM STYLES
+*********************/
+
+fieldset{
+  border: none;
+  border-bottom: 1px solid $grey6;
+  clear: both;
+  margin: $padding*2 0 10px;
+  padding: 0;
+  min-height: 300px;
+  &.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.form-group,
+.form-row{
+  clear: both;
+  transition: background 0.2s ease;
+  margin: $space-3 0;
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  &.error{
+    .form-num{
+      &:before{
+        background:$color-error;
+      }
+    }
+  }
+}
+
+.description,
+.help-block{
+  display: inline-block;
+  font-weight: $font-weight-normal;
+  font-style: italic;
+  padding: 5px 10px 5px 0;
+  margin-top: -10px;
+  @include font-size(1);
+  clear: both;
+  &[class^="bg"], 
+  &[class*=" bg"]{
+    padding-left: 10px;
+    width:100%;
+  }
+}
+
+label{
+  display:block;
+  @include font-size(1.6);
+  font-family: $font-header;
+  margin-bottom: 6px;
+  &.display-inline{
+    clear:none;
+    display: inline-block;
+    width:auto;
+  }
+}
+
+
+
+/*****************
+ERRORS
+*****************/
+.field-error{
+  margin: 0;
+  background: $color-error;
+  font-size: 1.2rem;
+  display: block;
+  list-style: none;
+  color:$white;
+  padding: 4px;
+  margin-top: -$space-1;
+  margin-bottom: 10px;
+  clear: left;
+}

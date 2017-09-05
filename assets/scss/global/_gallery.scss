@@ -1,0 +1,32 @@
+.gallery-thumbnails{
+    display: flex;
+    flex-wrap: wrap;
+}
+.gallery-thumbnail{
+    position: relative;
+    img{
+        display: block;
+    }
+    a.close{
+        background: $color-primary;
+        border-radius: 0;
+        color: $white;
+        padding: $space-1;
+        position: absolute;
+        line-height: 1;
+        top: $space-1;
+        right:$space-1;
+    }
+    .file-details{
+        background: $white;
+        padding: 4px;
+    }
+    .file-name{
+
+    }
+    .file-caption{
+        font-size: 0.8em;
+        line-height: 1.2;
+        color: $grey4;
+    }
+}

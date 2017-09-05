@@ -1,0 +1,104 @@
+textarea,
+.textarea{
+  min-height:200px;
+}
+
+.input-group{
+  display: flex;
+  .input-group-addon{
+    background: $grey7;
+    border-radius: $border-radius 0 0 $border-radius;
+    flex: 0 1 auto;
+    padding: 0 $space-1;
+  }
+  input{
+    margin-bottom: 0;
+  }
+}
+
+[type="text"],
+[type="email"],
+[type="password"],
+[type="date"],
+[type="tel"],
+[type="url"],
+[type="number"],
+textarea,
+.textarea{
+  background: $white;
+  border: 1px solid $grey7;
+  border-width: 0 0 2px 0;
+  -webkit-appearance:none; // remove shadow
+  border-radius: 0;
+  font-family:$font-body;
+  font-weight:$font-weight-normal;
+  @include font-size(1.6);
+  padding:$space-1;
+  margin-bottom: $space-1;
+  color:$grey2;
+  min-width: 44px;
+  &:not([class*="-col-"]){
+    width:100%;
+  }
+  &::-webkit-input-placeholder {
+    color:$grey2;
+    font-weight: $font-weight-normal;
+  }
+  &::-moz-placeholder {  
+     color:$grey2; 
+     font-weight: $font-weight-normal;
+  }
+  &:-ms-input-placeholder {  
+     color:$grey2;  
+     font-weight: $font-weight-normal;
+  }
+  &:disabled,
+  &[readonly] {
+    background: $grey8;
+    cursor: not-allowed;
+  }
+  &.small{
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+}
+input[type="number"]{
+  width:auto;
+}
+input[type="date"]{
+  &::-webkit-calendar-picker-indicator{
+      display: none;
+  }
+}
+input.datepicker{
+  width:100%;
+}
+
+form.inline{
+  label,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"]{
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 14px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  .textarea{
+    width:100%;
+  }
+}

@@ -1,0 +1,40 @@
+.table-container{
+  background: $white;
+}
+table,
+.table{
+  font-size: inherit;
+  width: 100%;
+  border-collapse: collapse;
+  th,
+  .th{
+    background: $grey7;
+    text-align: left;
+    //color:$white;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    a{
+      display: block;
+      width: 100%;
+      &:before{
+        float: right;
+        display: block;
+      }
+    }
+  }
+  tr,
+  .tr{
+    border-bottom: 1px solid $grey6;
+    @include font-size(1.2);
+    a{
+      color:$grey2;
+    }
+    i{
+      margin-right: 10px;
+    }
+  }
+  td,
+  .td{
+
+  }
+}

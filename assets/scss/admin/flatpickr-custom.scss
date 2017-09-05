@@ -1,0 +1,43 @@
+body{
+    .flatpickr-calendar{
+        background: lighten($grey7, 3);
+        //border: 1px solid $grey6;
+        box-shadow: none;
+        .flatpickr-month{
+            margin-top: $space-1;
+            margin-bottom: $space-2;
+        }
+        .flatpickr-day {
+            border-radius: 2px;
+            &:hover{
+                background: $grey8;
+            }
+            &.selected, 
+            &.startRange, 
+            &.endRange, 
+            &.selected.inRange, 
+            &.startRange.inRange, 
+            &.endRange.inRange, 
+            &.selected:focus, 
+            &.startRange:focus, 
+            &.endRange:focus, 
+            &.selected:hover, 
+            &.startRange:hover, 
+            &.endRange:hover, 
+            &.selected.prevMonthDay, 
+            &.startRange.prevMonthDay, 
+            &.endRange.prevMonthDay, 
+            &.selected.nextMonthDay, 
+            &.startRange.nextMonthDay, 
+            &.endRange.nextMonthDay{
+                background: $color-primary;
+                border-color: $color-primary;
+            }
+        }
+        &.arrowBottom{
+            &::after{
+                border-top-color: $grey7;
+            }
+        }
+    }
+}

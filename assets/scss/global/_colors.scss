@@ -1,0 +1,37 @@
+.bg-default{
+  //
+}
+.bg-light{
+  background-color:$grey8;
+}
+.bg-grey{
+  background-color:$grey7;
+}
+.bg-dark{
+  background-color:$grey3;
+  color:$white;
+}
+.bg-darkest{
+  //background-image: url('../images/backgrounds/upfeathers_dark.jpg');
+  background-color:$grey2;
+  color:$white;
+}
+.bg-white{
+  background-color:$white;
+  color:$grey2;
+}
+.bg-danger{
+  background-color: $color-danger;
+  color:$white;
+}
+.bg-warning{
+  background-color: $color-warning;
+  color:$grey2;
+}
+.bg-info{
+  background-color: $color-info;
+  color:$grey2;
+}
+.bg-trans{
+  background: transparent;
+}
