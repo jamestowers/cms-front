@@ -10,19 +10,18 @@ export const mutations = {
   },
   add (state, data) {
     state.items.push({
-      title: data.title,
-      slug: data.slug,
-      id: data.id
+      key: data.key,
+      value: data.value
     })
   },
-  remove (state, { category }) {
-    state.items.splice(state.items.indexOf(category), 1)
+  remove (state, { setting }) {
+    state.items.splice(state.items.indexOf(setting), 1)
   }
 }
 
 export const actions = {
   async fetch (context) {
-    let {data} = await axios.get('/admin/categories')
+    let {data} = await axios.get('/admin/settings')
     context.commit('load', data)
   }
 }

@@ -1,16 +1,20 @@
-import axios from '~/plugins/axios'
+// import axios from '~/plugins/axios'
 
 export const state = () => ({
-  //
+  // authUser: null
 })
 
 export const mutations = {
-  // 
+  /* SET_USER: function (state, user) {
+    state.authUser = user
+  } */
 }
 
 export const actions = {
-  async nuxtServerInit ({commit}) {
-    let {data} = await axios.get('/admin/categories')
-    commit('categories/load', data)
+  async nuxtServerInit ({dispatch}, { req }) {
+    return Promise.all([
+      dispatch('categories/fetch'),
+      dispatch('settings/fetch')
+    ])
   }
 }
