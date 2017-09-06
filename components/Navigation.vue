@@ -21,6 +21,7 @@
             <li><nuxt-link to="/users"><i class="icon-basic-postcard-multiple "></i> Users</nuxt-link></li>
             <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
             <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
+            <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
         </ul>
     </nav>
 </template>
