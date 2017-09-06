@@ -16,8 +16,7 @@
                 <input v-model="settings.admin_email" type="email" id="admin-email">
             </div>
             <div class="form-group">
-                <label for="logo">Logo</label>
-                <input v-model="settings.logo" type="text" id="logo">
+                <label>Logo</label>
             </div>
         </form>
     </div>

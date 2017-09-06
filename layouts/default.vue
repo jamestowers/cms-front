@@ -4,7 +4,7 @@
     <div id="main">
       <Navigation />
       <div id="content" class="px2">
-        <status></status>
+        <status />
         <nuxt/>
       </div>
     </div>

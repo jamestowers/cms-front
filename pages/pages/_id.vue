@@ -78,21 +78,21 @@
         return text.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
       },
       updatepage () {
-        let self = this
+        let vm = this
         this.loading = true
 
         axios.put(`/admin/pages/${this.$route.params.id}`, this.page)
           .then(function (response) {
             if (response.data.status === 'success') {
-              self.$store.commit('status/set', response.data.message)
-              self.page = response.data.entity
-              self.loading = false
+              vm.$store.commit('status/set', response.data.message)
+              vm.page = response.data.entity
+              vm.loading = false
             }
           })
           .catch(function (error) {
             console.error(error)
-            self.$store.commit('status/set', error.response.data.message)
-            self.loading = false
+            vm.$store.commit('status/set', error.response.data.message)
+            vm.loading = false
           })
       }
     }
