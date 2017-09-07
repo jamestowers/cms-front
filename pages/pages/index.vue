@@ -7,21 +7,21 @@
 
       <div class="container pages-list table">
         <div class="group p1 th border-bottom">
-          <div class="td sm-col-12 md-col-4 lg-col-4">Title</div>
-          <div class="td sm-col-12 md-col-4 lg-col-3">URL</div>
-          <div class="td sm-col-12 md-col-4 lg-col-3">Template</div>
-          <div class="td sm-col-12 md-col-4 lg-col-2">Edit</div>
+          <div class="td sm-col-12 md-col-3 lg-col-4">Title</div>
+          <div class="td sm-col-12 md-col-3 lg-col-3">URL</div>
+          <div class="td sm-col-12 md-col-3 lg-col-3">Template</div>
+          <div class="td sm-col-12 md-col-3 lg-col-2">Edit</div>
         </div>
         <ul v-if="pages.length > 0" class="m0">
           <draggable v-model="pages" :options="{handle:'.drag-handle', draggable:'.tr'}" @start="dragging=true" @over="onDragOver" @end="onDragEnd" @sort="onSort">
             <li v-for="page in pages" :key="page.id" class="group tr p1">
-              <div class="td sm-col-12 md-col-4 lg-col-4">
+              <div class="td sm-col-12 md-col-3 lg-col-4">
                 <span class="drag-handle p1">:::</span>
                 <nuxt-link :to="{ name: 'pages-id', params: { id: page.id }}" :style="{ paddingLeft: page.depth*15 +'px'}">{{ page.title }}</nuxt-link>
               </div>
-              <div class="td sm-col-12 md-col-4 lg-col-3">{{  page.slug }}</div>
-              <div class="td sm-col-12 md-col-4 lg-col-3">{{  page.template }}</div>
-              <div class="td sm-col-12 md-col-4 lg-col-2">Edit</div>
+              <div class="td sm-col-12 md-col-3 lg-col-3">{{  page.slug }}</div>
+              <div class="td sm-col-12 md-col-3 lg-col-3">{{  page.template }}</div>
+              <div class="td sm-col-12 md-col-3 lg-col-2">Edit</div>
             </li>
           </draggable>
         </ul>
