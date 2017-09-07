@@ -34,7 +34,7 @@ textarea,
   font-weight:$font-weight-normal;
   @include font-size(1.6);
   padding:$space-1;
-  margin-bottom: $space-1;
+  // margin-bottom: $space-1;
   color:$grey2;
   min-width: 44px;
   &:not([class*="-col-"]){
