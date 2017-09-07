@@ -1,4 +1,4 @@
-import axios from '~/plugins/axios'
+// import axios from '~/plugins/axios'
 
 export const state = () => ({
   items: []
@@ -21,8 +21,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetch (context) {
-    let {data} = await axios.get('/admin/categories')
-    context.commit('load', data)
+  async fetch ({ commit }) {
+    const data = await this.$axios.$get('/admin/categories')
+    commit('load', data)
   }
 }

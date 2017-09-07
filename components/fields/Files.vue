@@ -67,8 +67,6 @@
 </template>
 
 <script>
-    import axios from '~/plugins/axios'
-
     export default {
       props: {
         acceptedTypes: {
@@ -129,7 +127,7 @@
         deleteFile (e) {
           let id = e.currentTarget.dataset.id
           let self = this
-          axios.delete(`/media/${id}`)
+          this.axios.delete(`/media/${id}`)
             .then(function (response) {
               if (response.data.status === 'success') {
                 self.$store.commit('status/set', response.data.message)

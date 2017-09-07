@@ -29,8 +29,6 @@
 </template>
 
 <script>
-    import axios from '~/plugins/axios'
-
     export default {
 
       data () {
@@ -57,7 +55,7 @@
             username: vm.username,
             password: vm.password
           }
-          axios.post('v1/oauth/token', creds)
+          this.$axios.$post('v1/oauth/token', creds)
             .then(response => {
               vm.access_token = response.data.access_token
               vm.refresh_token = response.data.refresh_token

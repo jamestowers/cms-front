@@ -41,14 +41,12 @@
 </template>
 
 <script>
-  import axios from '~/plugins/axios'
-
   export default {
 
-    async asyncData ({ params }) {
+    async asyncData ({ params, app }) {
       if (params.id !== 'new') {
-        let { data } = await axios.get(`/admin/pages/${params.id}`)
-        return { page: data, editing: true }
+        const page = await app.$axios.$get(`/admin/pages/${params.id}`)
+        return { page, editing: true }
       }
     },
 
@@ -81,7 +79,7 @@
         let vm = this
         this.loading = true
 
-        axios.put(`/admin/pages/${this.$route.params.id}`, this.page)
+        this.$axios.put(`/admin/pages/${this.$route.params.id}`, this.page)
           .then(function (response) {
             if (response.data.status === 'success') {
               vm.$store.commit('status/set', response.data.message)

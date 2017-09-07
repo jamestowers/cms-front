@@ -28,13 +28,12 @@
 </template>
 
 <script>
-  import axios from '~/plugins/axios'
   import Draggable from 'vuedraggable'
 
   export default {
 
-    async asyncData ({ params }) {
-      let { data } = await axios.get('/admin/users')
+    async asyncData ({ params, app }) {
+      const data = await app.$axios.$get('/admin/users')
       return { users: data.data }
     },
 

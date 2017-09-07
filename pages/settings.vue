@@ -23,23 +23,11 @@
 </template>
 
 <script>
-    import axios from '~/plugins/axios'
-
     export default {
-
-      async asyncData ({ params }) {
-        let { data } = await axios.get('/admin/settings')
-        return { settings: data }
-      },
 
       data () {
         return {
-          settings: {
-            site_name: null,
-            tagline: null,
-            admin_email: null,
-            logo: null
-          }
+          settings: this.$store.state.settings.items
         }
       }
     }

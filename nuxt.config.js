@@ -1,5 +1,7 @@
 const webpack = require('webpack')
 
+require('dotenv').config()
+
 module.exports = {
 
   head: {
@@ -17,7 +19,7 @@ module.exports = {
   loading: { color: '#4DC0FF' },
 
   env: {
-    baseUrl: process.env.BASE_URL || 'http://cms-backend.dev'
+    baseUrl: process.env.API_URL || 'http://localhost:8000'
   },
 
   router: {
@@ -30,14 +32,23 @@ module.exports = {
     '@/assets/scss/admin.scss'
   ],
 
+  modules: [
+    '@nuxtjs/axios'
+  ],
+
+  axios: {
+    credentials: false,
+    baseURL: process.env.API_URL || 'http://localhost:8000',
+    browserBaseURL: ''
+  },
+
   plugins: [
     { src: '~/plugins/global.js' },
-    { src: '~/plugins/axios.js' },
     { src: '~/plugins/browser-only', ssr: false }
   ],
 
   build: {
-    vendor: ['axios'],
+    // vendor: ['axios'],
     extend (config, ctx) {
       // Have to use compiler-included build to get some broseer only components
       // see: https://github.com/nuxt/nuxt.js/issues/1142

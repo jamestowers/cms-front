@@ -30,7 +30,6 @@
 </template>
 
 <script>
-  import axios from '~/plugins/axios'
   import Multiselect from 'vue-multiselect'
 
   export default {
@@ -70,7 +69,7 @@
       },
       submitNewCategory () {
         const vm = this
-        axios.post('/admin/categories', this.newCategory)
+        this.axios.post('/admin/categories', this.newCategory)
           .then(function (response) {
             vm.$store.commit('categories/add', response.data.entity)
             this.resetNewCategory()

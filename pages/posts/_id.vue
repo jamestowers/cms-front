@@ -52,16 +52,15 @@
 </template>
 
 <script>
-  import axios from '~/plugins/axios'
   import CategorySelect from '~/components/fields/Categories'
   import FileUpload from '~/components/fields/Files'
 
   export default {
 
-    async asyncData ({ params }) {
+    async asyncData ({ params, app }) {
       if (params.id !== 'new') {
-        let { data } = await axios.get(`/admin/posts/${params.id}`)
-        return { post: data, editing: true }
+        const post = await app.$axios.$get(`/admin/posts/${params.id}`)
+        return { post, editing: true }
       }
     },
 
@@ -108,7 +107,7 @@
         this.post.related_file_ids = this.fileIds
         this.post.categories = this.allCategoryIds
 
-        axios.put(`/admin/posts/${this.$route.params.id}`, this.post)
+        this.$axios.put(`/admin/posts/${this.$route.params.id}`, this.post)
           .then(function (response) {
             if (response.data.status === 'success') {
               self.$store.commit('status/set', response.data.message)
