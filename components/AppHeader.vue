@@ -7,9 +7,7 @@
 
       <h1 id="logo-text" class="m0 pull-left v-align">{{ site_name }}</h1>
 
-      <div class="pull-right">
-        <a href="#" id="menu-toggle"><span></span></a>
-      </div>
+      <a href="#" id="menu-toggle"><span></span></a>
 
     </header>
 </template>
@@ -25,3 +23,9 @@
     }
   }
 </script>
+
+<style>
+  header.header{
+    position: relative;
+  }
+</style>

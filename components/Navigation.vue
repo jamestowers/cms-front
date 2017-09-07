@@ -21,7 +21,14 @@
             <li><nuxt-link to="/users"><i class="icon-basic-postcard-multiple "></i> Users</nuxt-link></li>
             <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
             <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
-            <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
+            <li>
+              <nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link>
+              <ul>
+                <li>
+                  <nuxt-link to="/settings/create"><i class="icon-basic-book-pencil "></i> Add new</nuxt-link>
+                </li>
+              </ul>
+            </li>
         </ul>
     </nav>
 </template>
@@ -35,11 +42,11 @@ $nav-width: 80px;
 a#menu-toggle{
   display: block;
   height: auto;
-  padding: 20px 14px;
-  position: fixed;
+  padding: $space-2;
+  position: absolute;
   transition: transform 0.4s ease-in 2s;
   right: 0;
-  top: 100%;
+  top: 0;
   z-index: 999;
   span,
   span:before,
@@ -77,6 +84,22 @@ a#menu-toggle{
     span:before,
     span:after{
       width:20px;
+    }
+  }
+}
+
+@media ($mq-xsmall) { 
+  nav#admin-nav{
+    position: fixed;
+    top: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    ul{
+      li{
+        i{
+          
+        }
+      }
     }
   }
 }
