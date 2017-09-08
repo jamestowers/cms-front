@@ -9,13 +9,13 @@
       <form @submit.prevent="create" action="">
 
         <div class="form-group">
-          <label for="setting_name">Setting Name</label>
-          <input v-model="label" type="text" id="setting_name">
+          <label for="setting_name">Name</label>
+          <input @change="updateKey" v-model="label" type="text" id="setting_name">
           <div class="help-block">The name of the setting, as you want it displayed on the settings page</div>
         </div>
 
         <div class="form-group">
-          <label for="setting_key">Setting Key</label>
+          <label for="setting_key">Key</label>
           <input v-model="key" type="text" id="setting_key">
           <div class="help-block">Unique key to use to store this setting, All lowercase, alpha-numeric and _ - characters only</div>
         </div>
@@ -54,6 +54,7 @@
 
 <script>
   import Multiselect from 'vue-multiselect'
+  import _ from 'lodash'
 
   export default {
     data () {
@@ -82,6 +83,12 @@
     },
 
     methods: {
+      updateKey (name) {
+        console.log(name.target.value)
+        if (this.key === null || this.key === '') {
+          this.key = _.snakeCase(name.target.value)
+        }
+      },
       async create () {
         const resp = await this.$axios.$post('/admin/settings', {
           key: this.key,

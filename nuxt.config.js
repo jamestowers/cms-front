@@ -48,7 +48,12 @@ module.exports = {
   ],
 
   build: {
-    // vendor: ['axios'],
+    vendor: ['lodash'],
+    plugins: [
+      new webpack.ProvidePlugin({
+        '_': 'lodash'
+      })
+    ],
     extend (config, ctx) {
       // Have to use compiler-included build to get some broseer only components
       // see: https://github.com/nuxt/nuxt.js/issues/1142
