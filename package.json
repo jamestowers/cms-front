@@ -20,8 +20,10 @@
     "lodash": "^4.17.4",
     "nuxt": "^1.0.0-rc9",
     "vue-clip": "^1.0.0",
+    "vue-flatpickr-component": "^3.0.0",
     "vue-form-generator": "^2.0.0",
     "vue-multiselect": "^2.0.2",
+    "vue-no-ssr": "^0.2.0",
     "vue-quill-editor": "^2.3.0",
     "vuedraggable": "^2.14.1"
   },

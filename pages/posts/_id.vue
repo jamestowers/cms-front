@@ -12,6 +12,7 @@
           <label for="title">Title</label>
           <input @change="updateSlug" v-model="post.title" id="title" type="text">
         </div>
+        
         <div class="form-group mt1">
           <label for="slug">URL</label>
           <div class="input-group">
@@ -19,27 +20,40 @@
             <input v-model="post.slug" id="slug" type="text" class="slug-input small sm-col-12 md-col-4 lg-col-4">
           </div>
         </div>
+
         <div class="form-group">
           <label for="body">Content</label>
-          <wysiwyg @updated="updateBody" :default="this.post.body"></wysiwyg>
+          <wysiwyg v-model="post.body"></wysiwyg>
         </div>
+        
         <div class="form-group">
           <label for="excerpt">Excerpt</label>
-          <wysiwyg @updated="updateExcerpt" :default="this.post.excerpt"></wysiwyg>
+          <wysiwyg v-model="post.excerpt"></wysiwyg>
         </div>
+        
         <div class="form-group">
           <label for="files">Files</label>
           <file-upload @file-uploaded="onFileUploaded" :current-files="post.media" :url="mediaUploadUrl"></file-upload>
         </div>
+      
       </div>
 
       <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
       
         <label for="">Categories</label>
         <category-select @updated="updateCategories" :default="defaultCategoryIds"></category-select>
-      
+
+        <div class="form-group">
+          <label for="title">Publish at</label>
+          <flat-pickr 
+            v-model="post.published_at"
+            placeholder="Leave blank to publish now"
+            :config="datePickerConfig"
+            ></flat-pickr>
+        </div>
+
         <div class="form-group border-top py2">
-          <div v-if="loading" class="loading">Loading...</div>
+          <loading v-if="loading"></loading>
           <button @click.prevent="updatePost" type="submit" class="btn-primary">{{ this.editing ? 'Update post' : 'Create post' }}</button>
         </div>
 
@@ -52,6 +66,7 @@
 </template>
 
 <script>
+  import Loading from '~/components/Loading'
   import CategorySelect from '~/components/fields/Categories'
   import FileUpload from '~/components/fields/Files'
   import _ from 'lodash'
@@ -79,7 +94,13 @@
         },
         categoryIds: [],
         uploadedFiles: [],
-        mediaUploadUrl: process.env.baseUrl + '/media/upload'
+        mediaUploadUrl: process.env.baseUrl + '/media/upload',
+        datePickerConfig: {
+          enableTime: true,
+          dateFormat: 'Y-m-d H:i:S',
+          altInput: true,
+          altFormat: 'd M Y at H:i'
+        }
       }
     },
 
@@ -144,6 +165,7 @@
     },
 
     components: {
+      Loading,
       CategorySelect,
       FileUpload
     }

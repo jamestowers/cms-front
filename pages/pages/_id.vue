@@ -1,6 +1,6 @@
 <template>
     
-  <form action="" method="page">
+  <form action="" method="post">
 
     <div class="clearfix mxn2 flex">
 
@@ -21,14 +21,14 @@
         </div>
         <div class="form-group">
           <label for="body">Content</label>
-          <wysiwyg @updated="updateBody" :default="this.page.body"></wysiwyg>
+          <wysiwyg v-model="page.content"></wysiwyg>
         </div>
       </div>
 
       <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
       
         <div class="form-group border-top py2">
-          <div v-if="loading" class="loading">Loading...</div>
+          <loading v-if="loading"></loading>
           <button @click.prevent="updatepage" type="submit" class="btn-primary">{{ this.editing ? 'Update page' : 'Create page' }}</button>
         </div>
 
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+  import Loading from '~/components/Loading'
+
   export default {
 
     async asyncData ({ params, app }) {
@@ -57,7 +59,7 @@
         page: {
           title: null,
           slug: null,
-          body: null,
+          content: null,
           template: null
         }
       }
@@ -93,6 +95,10 @@
             vm.loading = false
           })
       }
+    },
+
+    components: {
+      Loading
     }
   }
 </script>
