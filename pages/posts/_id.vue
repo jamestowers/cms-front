@@ -54,6 +54,7 @@
 <script>
   import CategorySelect from '~/components/fields/Categories'
   import FileUpload from '~/components/fields/Files'
+  import _ from 'lodash'
 
   export default {
 
@@ -85,7 +86,7 @@
     methods: {
       updateSlug (title) {
         if (this.post.slug === null || this.post.slug === '') {
-          this.post.slug = this.slugify(title.target.value)
+          this.post.slug = _.kebabCase(title.target.value)
         }
       },
       updateBody (content) {
@@ -97,9 +98,9 @@
       updateCategories (categories) {
         this.categoryIds = categories
       },
-      slugify (text) {
+      /* slugify (text) {
         return text.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-      },
+      }, */
       updatePost () {
         let self = this
         this.loading = true
