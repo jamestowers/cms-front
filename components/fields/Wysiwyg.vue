@@ -1,17 +1,16 @@
 <template>
 
   <div class="wysiwyg">
+      <quill-editor ref="quillEditor"
+          v-model="value"
+          :options="editorOptions"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"
+          @change="onEditorChange($event)">
+      </quill-editor>
 
-    <quill-editor ref="quillEditor"
-        v-model="htmlContent"
-        :options="editorOptions"
-        @blur="onEditorBlur($event)"
-        @focus="onEditorFocus($event)"
-        @ready="onEditorReady($event)"
-        @change="onEditorChange($event)">
-    </quill-editor>
-
-    <textarea v-model="htmlContent" class="hide"></textarea>
+    <textarea v-model="value" class="hide"></textarea>
   </div>
   
 </template>
@@ -21,7 +20,7 @@
 
   export default {
     props: {
-      default: {
+      value: {
         type: String,
         default: ''
       }
@@ -29,7 +28,7 @@
 
     data () {
       return {
-        htmlContent: this.default,
+        value: this.value,
         editorOptions: {
           theme: false,
           modules: {
@@ -50,8 +49,8 @@
       onEditorBlur (editor) {
         // console.log('editor blur!', editor)
         // console.log(this.$refs.quillOutput)
-        this.$emit('updated', this.htmlContent)
-        // this.$refs.quillOutput.value = this.htmlContent
+        this.$emit('input', this.value)
+        // this.$refs.quillOutput.value = this.value
       },
       onEditorFocus (editor) {
         // console.log('editor focus!', editor)
@@ -61,7 +60,7 @@
       },
       onEditorChange ({ editor, html, text }) {
         // console.log('editor change!', editor, html, text)
-        this.htmlContent = html
+        this.value = html
       }
     },
 
