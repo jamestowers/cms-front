@@ -1,16 +1,27 @@
 <template>
-    <div class="py3 px2">
+  <div class="flex mxn2">
+    <div class="py3 px3 sm-col-12 md-col-8 lg-col-8">
         <page-title>Settings</page-title>
 
         <div class="group mb2">
           <form @submit.prevent="save" action="">
             
-            <custom-field v-model="editedFields[setting.key]" v-for="setting in settings" :key="setting.id" :field="setting"></custom-field>
-
+            <div v-for="setting in settings" :key="setting.id">
+              <custom-field v-model="editedFields[setting.key]" :field="setting"></custom-field>
+              <nuxt-link to="/settings/create" class="small">Edit setting</nuxt-link>
+            </div>
             <button type="submit">Save settings</button>
           </form>
         </div>
     </div>
+
+    <div class="p3 sm-col-12 md-col-4 lg-col-4 bg-grey">
+      <h2><i class="big icon-basic-pin2 v-align"></i> Hint</h2>
+      <p>Modify various settings for the site here.</p>
+
+      <nuxt-link to="/settings/create" class="btn-sm" role="button">Add new setting</nuxt-link>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -40,12 +51,9 @@
     methods: {
       async save () {
         const resp = await this.$axios.$put('/admin/settings', this.editedFields)
-        console.log(resp)
-      },
-
-      async create () {
-        const resp = await this.$axios.$post('/admin/settings', this.newSetting)
-        console.log(resp)
+        if (resp.status === 'success') {
+          this.$store.commit('status/set', resp.message)
+        }
       }
     },
 

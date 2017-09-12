@@ -40,6 +40,10 @@ code{
   margin: -2px 0;
   font-size: 0.9em;
 }
+.big{
+  @include font-size(5);
+  line-height: 1
+}
 .huge{
   @include font-size(9);
   font-size: 7vw;

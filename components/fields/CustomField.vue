@@ -12,9 +12,19 @@
         deselect-label="Click to deselect"
         ></multiselect>
 
+      <!-- FILE -->
+      <file
+        v-if="field.field_type === 'file'"
+        @input="getFileUrl"
+        action="/media/upload"
+        :label="field.value || 'Choose File'"
+        accept="image/*"
+        ></file>
+
       <!-- TEXTAREA -->
       <textarea 
         v-else-if="field.field_type === 'textarea'" 
+        v-model="field.value"
         @input="updateValue" 
         value="field.value" 
         :id="field.key" 
@@ -30,11 +40,16 @@
         :type="field.field_type"
         >
 
+        <div v-if="field.description" class="help-block">
+          {{ field.description }}
+        </div>
+
   </div>
 </template>
 
 <script>
   import Multiselect from 'vue-multiselect'
+  import File from '~/components/fields/File'
 
   export default {
     props: {
@@ -46,12 +61,17 @@
 
     methods: {
       updateValue (e) {
-        this.$emit('input', e.currentTarget.value)
+        let value = e.currentTarget ? e.currentTarget.value : e
+        this.$emit('input', value)
+      },
+      getFileUrl (e) {
+        this.$emit('input', e.url)
       }
     },
 
     components: {
-      Multiselect
+      Multiselect,
+      File
     }
   }
 </script>
