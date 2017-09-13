@@ -17,26 +17,37 @@
           <label for="description">Description</label>
           <wysiwyg v-model="event.description"></wysiwyg>
         </div>
+
+        <div class="form-group">
+          <label for="location">Location</label>
+        </div>
+
       </div>
 
       <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
         
         <div class="form-group">
           <label for="title">Event Start Time</label>
-          <flat-pickr 
-            v-model="event.start_at"
-            placeholder="Select date"
-            :config="datePickerConfig"
-            ></flat-pickr>
+          <div class="input-group light">
+            <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
+            <flat-pickr 
+              v-model="event.start_at"
+              placeholder="Select date"
+              :config="datePickerConfig"
+              ></flat-pickr>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="title">Event End Time</label>
-          <flat-pickr 
-            v-model="event.end_at"
-            placeholder="Select date"
-            :config="datePickerConfig"
-            ></flat-pickr>
+          <div class="input-group light">
+            <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
+            <flat-pickr 
+              v-model="event.end_at"
+              placeholder="Select date"
+              :config="datePickerConfig"
+              ></flat-pickr>
+          </div>
         </div>
         
         <div class="form-group border-top py2">

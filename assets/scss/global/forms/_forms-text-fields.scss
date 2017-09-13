@@ -5,13 +5,31 @@ textarea,
 
 .input-group{
   display: flex;
+  &.dark{
+    .input-group-addon{
+      background: $grey6;
+    }
+  }
+  &.light{
+    .input-group-addon{
+      background: $grey8;
+    }
+  }
   .input-group-addon{
     background: $grey7;
     border-radius: $border-radius 0 0 $border-radius;
     flex: 0 1 auto;
     padding: 0 $space-1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    i{
+      font-size: 1.2em;
+    }
   }
   input{
+    border: none;
     margin-bottom: 0;
   }
 }
@@ -27,7 +45,7 @@ textarea,
 .textarea{
   background: $white;
   border: 1px solid $grey7;
-  border-width: 0 0 2px 0;
+  //border-width: 0 0 2px 0;
   -webkit-appearance:none; // remove shadow
   border-radius: 0;
   font-family:$font-body;
@@ -54,7 +72,7 @@ textarea,
   }
   &:disabled,
   &[readonly] {
-    background: $grey8;
+    //background: $grey8;
     cursor: not-allowed;
   }
   &.small{
