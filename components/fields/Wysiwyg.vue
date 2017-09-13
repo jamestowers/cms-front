@@ -1,22 +1,27 @@
 <template>
 
   <div class="wysiwyg">
-      <quill-editor ref="quillEditor"
+      <!-- <quill-editor ref="quillEditor"
           v-model="value"
           :options="editorOptions"
           @blur="onEditorBlur($event)"
           @focus="onEditorFocus($event)"
           @ready="onEditorReady($event)"
           @change="onEditorChange($event)">
-      </quill-editor>
+      </quill-editor> -->
 
-    <textarea v-model="value" class="hide"></textarea>
+      <div class="quill-editor" 
+        :content="value"
+        :options="editorOptions"
+        @change="onEditorChange($event)"
+        v-quill:quillEditor="editorOptions">
+      </div>
   </div>
   
 </template>
 
 <script>
-  import { quillEditor } from 'vue-quill-editor'
+  // import { quillEditor } from 'vue-quill-editor'
 
   export default {
     props: {
@@ -28,7 +33,7 @@
 
     data () {
       return {
-        value: this.value,
+        // value: this.value,
         editorOptions: {
           theme: false,
           modules: {
@@ -49,7 +54,7 @@
       onEditorBlur (editor) {
         // console.log('editor blur!', editor)
         // console.log(this.$refs.quillOutput)
-        this.$emit('input', this.value)
+        // this.$emit('input', this.value)
         // this.$refs.quillOutput.value = this.value
       },
       onEditorFocus (editor) {
@@ -60,18 +65,19 @@
       },
       onEditorChange ({ editor, html, text }) {
         // console.log('editor change!', editor, html, text)
-        this.value = html
+        this.$emit('input', this.html)
+        // this.value = html
       }
     },
 
     computed: {
       editor () {
-        return this.$refs.quillEditor.quill
+        return this.quillEditor
       }
     },
 
     components: {
-      quillEditor
+      // quillEditor
     }
   }
 </script>

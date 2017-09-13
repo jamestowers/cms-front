@@ -29,7 +29,9 @@ module.exports = {
 
   css: [
     '@/assets/scss/global/_global.scss',
-    '@/assets/scss/admin.scss'
+    '@/assets/scss/admin.scss',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.core.css'
   ],
 
   modules: [
