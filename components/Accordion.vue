@@ -1,6 +1,6 @@
 <template>
-  <div @click="toggle" class="accordion" :class="{'open': isOpen}" :style="{ height: accordionHeight + 'px' }">
-    <h1 ref="handle" class="accordion-handle border-bottom py2 px3">{{ title }}</h1>
+  <div class="accordion" :class="{'open': isOpen}" :style="{ height: accordionHeight + 'px' }">
+    <h1 @click="toggle" ref="handle" class="accordion-handle border-bottom py2 px3">{{ title }}</h1>
     <div ref="content" class="accordion-content">
       <slot></slot>
     </div>
