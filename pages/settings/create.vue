@@ -108,7 +108,7 @@
           options: this.options ? this.options.replace(/^\s+|\s+$/g, '').split('\n') : null
         })
         if (response.status === 'success') {
-          this.$store.commit('status/set', response.data.message)
+          this.$store.commit('status/set', response.message)
         }
       }
     },

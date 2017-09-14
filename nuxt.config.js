@@ -11,6 +11,9 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Nuxt.js driven frontend for the custom Laravel driven CMS' }
     ],
+    script: [
+      // { src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}` }
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
@@ -48,6 +51,10 @@ module.exports = {
     { src: '~/plugins/global.js' },
     { src: '~/plugins/browser-only', ssr: false }
   ],
+
+  extend (config) {
+    config.resolve.alias['Mixins'] = '~/assets/js/mixins'
+  },
 
   build: {
     vendor: ['lodash'],

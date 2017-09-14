@@ -5,7 +5,6 @@
     <div class="clearfix mxn2 flex">
 
       <div class="sm-col-12 md-col-12 lg-col-8 p3">
-
         <page-title>{{ this.editing ? `Edit ${this.event.title}` : 'Add a new event' }}</page-title>
 
         <div class="form-group mb0">
@@ -18,10 +17,23 @@
           <wysiwyg v-model="event.description"></wysiwyg>
         </div>
 
-        <div class="form-group">
-          <label for="location">Location</label>
-        </div>
-
+        <accordion title="Location" class="bg-light-grey mxn3">
+          <div class="form-group px3">
+            <label for="">Select a pre-existing location</label>
+            <div class="mb2">
+              <multiselect
+                v-model="event.location" 
+                :options="locations"
+                track-by="name"
+                label="name"
+                placeholder="Select or add new location below"
+                ></multiselect>
+            </div>
+            <label for="">Or add a new one</label>
+            <location v-model="event.location"></location>
+            <button @click.prevent="addNewLocation" class="pull-left btn-sm">Add a new location</button>
+          </div>
+        </accordion>
       </div>
 
       <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
@@ -65,27 +77,35 @@
 
 <script>
   import Loading from '~/components/Loading'
-  import NoSSR from 'vue-no-ssr'
+  import Accordion from '~/components/Accordion'
+  import Location from '~/components/fields/Location'
+  import Multiselect from 'vue-multiselect'
+  import _ from 'lodash'
 
   export default {
-
     async asyncData ({ params, app }) {
+      let event
+      let editing = false
+
       if (params.id !== 'new') {
-        const event = await app.$axios.$get(`/admin/events/${params.id}`)
-        return { event, editing: true }
+        event = await app.$axios.$get(`/admin/events/${params.id}`)
+        editing = true
       }
+      let locations = await app.$axios.$get(`/admin/locations/list`)
+      return { event, locations: _.values(locations), editing }
     },
 
     data () {
       return {
         loading: false,
-        editing: false,
         event: {
           title: null,
           description: null,
           start_at: null,
-          end_at: null
+          end_at: null,
+          location: null
         },
+        locations: [],
         datePickerConfig: {
           enableTime: true,
           dateFormat: 'Y-m-d H:i:S',
@@ -99,8 +119,8 @@
       updateBody (content) {
         this.event.description = content
       },
-      slugify (text) {
-        return text.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      addNewLocation () {
+        this.event.location = {}
       },
       updateEvent () {
         let vm = this
@@ -124,13 +144,15 @@
 
     components: {
       Loading,
-      NoSSR
+      Accordion,
+      Location,
+      Multiselect
     }
   }
 </script>
 
 <style lang="scss">
 
-  @import "~assets/scss/global/variables";
+  // @import "~assets/scss/global/variables";
 
 </style>

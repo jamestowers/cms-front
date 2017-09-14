@@ -8,7 +8,7 @@
       <div class="container events-list table">
         <div class="group p1 th border-bottom">
           <div class="td sm-col-12 md-col-3 lg-col-4 pr1">Title</div>
-          <div class="td sm-col-12 md-col-3 lg-col-3 pr1">Description</div>
+          <div class="td sm-col-12 md-col-3 lg-col-3 pr1">Venue</div>
           <div class="td sm-col-12 md-col-2 lg-col-2 pr1">Start at</div>
           <div class="td sm-col-12 md-col-2 lg-col-2 pr1">End at</div>
           <div class="td sm-col-12 md-col-2 lg-col-1 pr1">Edit</div>
@@ -18,7 +18,7 @@
             <div class="td sm-col-12 md-col-3 lg-col-4 pr1">
               <nuxt-link :to="{ name: 'events-id', params: { id: event.id }}">{{ event.title }}</nuxt-link>
             </div>
-            <div class="td sm-col-12 md-col-3 lg-col-3 pr1" v-html="event.description"></div>
+            <div class="td sm-col-12 md-col-3 lg-col-3 pr1">{{ event.location ? event.location.name : ' ' }}</div>
             <div class="td sm-col-12 md-col-2 lg-col-2 pr1">{{  event.start_at }}</div>
             <div class="td sm-col-12 md-col-2 lg-col-2 pr1">{{  event.end_at }}</div>
             <div class="td sm-col-12 md-col-2 lg-col-1 pr1"><nuxt-link :to="{ name: 'events-id', params: { id: event.id }}">Edit</nuxt-link></div>

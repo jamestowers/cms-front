@@ -4,6 +4,9 @@
 .bg-light{
   background-color:$grey8;
 }
+.bg-light-grey{
+  background-color:lighten($grey7, 2);
+}
 .bg-grey{
   background-color:$grey7;
 }

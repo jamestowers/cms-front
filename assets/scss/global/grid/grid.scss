@@ -5,6 +5,7 @@
 [class^="sm-col"], [class*=" sm-col"],
 [class^="md-col"], [class*=" md-col"],
 [class^="lg-col"], [class*=" lg-col"] {
-  float: left;
+  // float: left;
+  display: inline-block;
   box-sizing: border-box;
 }
