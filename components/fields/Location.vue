@@ -6,29 +6,29 @@
     </div>
 
     <div class="sm-col-12 md-col-12 lg-col-6">
-      <div class="form-group my0">
+      <div class="form-group mt0 mb2">
         <label for="address_line_1">Address Line 1</label>
         <input v-model="location.address_line_1" id="address_line_1" type="text" placeholder="Street name">
       </div>
 
-      <div class="form-group my0">
+      <div class="form-group mt0 mb2">
         <label for="address_line_2">Address Line 2</label>
         <input v-model="location.address_line_2" id="address_line_2" type="text">
       </div>
 
-      <div class="form-group my0">
+      <div class="form-group mt0 mb2">
         <label for="town">Town</label>
         <input v-model="location.town" id="town" type="text" placeholder="Town or village name">
       </div>
     </div>
 
     <div class="sm-col-12 md-col-12 lg-col-6 pl2">
-      <div class="form-group my0">
+      <div class="form-group mt0 mb2">
         <label for="city">City</label>
         <input v-model="location.city" id="city" type="text">
       </div>
 
-      <div class="form-group my0">
+      <div class="form-group mt0 mb2">
         <label for="county">County</label>
         <input v-model="location.county" id="county" type="text">
       </div>
