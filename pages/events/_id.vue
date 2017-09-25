@@ -2,14 +2,29 @@
     
   <form action="" method="post">
 
+    <div v-if="event.image" class="hero sm-col-12 md-col-12 lg-col-12 mxn2 text-center">
+      <img :src="`${this.$store.state.settings.items.image_root_path}/${event.images.xlarge}`" alt="Event hero image">
+    </div>
+
     <div class="clearfix mxn2 flex">
 
-      <div class="sm-col-12 md-col-12 lg-col-8 p3">
-        <page-title>{{ this.editing ? `Edit ${this.event.title}` : 'Add a new event' }}</page-title>
+      <div class="sm-col-12 md-col-12 lg-col-8 px3 pt3">
+        <page-title>{{ editing ? `Edit ${event.title}` : 'Add a new event' }}</page-title>
 
         <div class="form-group mb0">
           <label for="title">Title</label>
           <input v-model="event.title" id="title" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <!-- <image-upload v-model="event.image" action="/media/upload"></image-upload> -->
+          <image-upload 
+            @input="onImageUploaded" 
+            :value="this.imageThumbnail" 
+            action="/media/upload"
+            btn-class="btn btn-sm"
+            ></image-upload>
         </div>
     
         <div class="form-group">
@@ -17,7 +32,11 @@
           <wysiwyg v-model="event.description"></wysiwyg>
         </div>
 
-        <accordion title="Location" class="bg-light-grey mxn3">
+        <accordion 
+          title="Location" 
+          class="bg-light-grey mxn3" 
+          handle-class="border-bottom py2 px3"
+          >
           <div class="form-group px3">
             <label for="">Select a pre-existing location</label>
             <div class="mb2">
@@ -36,35 +55,76 @@
         </accordion>
       </div>
 
-      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
-        
-        <div class="form-group">
-          <label for="title">Event Start Time</label>
-          <div class="input-group light">
-            <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
-            <flat-pickr 
-              v-model="event.start_at"
-              placeholder="Select date"
-              :config="datePickerConfig"
-              ></flat-pickr>
-          </div>
-        </div>
+      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey">
 
-        <div class="form-group">
-          <label for="title">Event End Time</label>
-          <div class="input-group light">
-            <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
-            <flat-pickr 
-              v-model="event.end_at"
-              placeholder="Select date"
-              :config="datePickerConfig"
-              ></flat-pickr>
+        <div class="p3">
+          <h1>Dates</h1>
+          <div class="form-group">
+            <label for="title">Event Start Time</label>
+            <div class="input-group light">
+              <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
+              <flat-pickr 
+                v-model="event.start_at"
+                placeholder="Select date"
+                :config="datePickerConfig"
+                ></flat-pickr>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="title">Event End Time</label>
+            <div class="input-group light">
+              <span class="input-group-addon"><i class="icon-basic-calendar"></i></span>
+              <flat-pickr 
+                v-model="event.end_at"
+                placeholder="Select date"
+                :config="datePickerConfig"
+                ></flat-pickr>
+            </div>
           </div>
         </div>
         
-        <div class="form-group border-top py2">
-          <loading v-if="loading"></loading>
+        <div class="p3 border-top">
+          <h1>Guests</h1>
+          
+          <div class="form-group mb0">
+            <label for="price">Ticket price</label>
+            <div class="input-group light">
+              <span class="input-group-addon">£</span>
+              <input v-model="event.price" id="price" type="number" placeholder="Free">
+            </div>
+            <span class="help-block">Leave blank for free entry</span>
+          </div>
+
+          <div class="form-group mb0">
+            <label for="places_total">Places / tickets available</label>
+            <input v-model="event.places_total" id="places_total" type="number" placeholder="Unlimited">
+            <span class="help-block">Leave blank for unlimited places</span>
+          </div>
+
+          <div class="form-group mb0">
+            <label for="min_age">Minimum age</label>
+            <input v-model="event.min_age" id="min_age" type="number" placeholder="All ages">
+            <span class="help-block">Leave blank for allow all ages</span>
+          </div>
+
+          <div class="form-group mb0">
+            
+            <checkbox v-model="event.private" label="Make private" id="private"></checkbox>
+            <span class="help-block mt1">If set to private, this event won't show up in listings but people with the link will still be able to see it</span>
+            <!-- <div class="checkbox">
+              <input v-model="event.private" type="checkbox" value="1" id="private" />
+              <div></div>
+              <label for="private">Make private</label>
+              <span class="help-block mt1">If set to private, this event won't show up in listings but people with the link will still be able to see it</span>
+            </div> -->
+          </div>
+          
+        </div>
+        
+        <div class="form-group border-top p3">
           <button @click.prevent="updateEvent" type="submit" class="btn-primary">{{ this.editing ? 'Update event' : 'Create event' }}</button>
+          <loading v-show="loading" class="pull-right"></loading>
         </div>
 
       </div>
@@ -79,6 +139,8 @@
   import Loading from '~/components/Loading'
   import Accordion from '~/components/Accordion'
   import Location from '~/components/fields/Location'
+  import Checkbox from '~/components/fields/Checkbox'
+  import ImageUpload from '~/components/fields/ImageUpload'
   import Multiselect from 'vue-multiselect'
   import _ from 'lodash'
 
@@ -103,7 +165,10 @@
           description: null,
           start_at: null,
           end_at: null,
-          location: null
+          location: null,
+          private: false,
+          places_available: null,
+          places_reserved: null
         },
         locations: [],
         datePickerConfig: {
@@ -115,12 +180,23 @@
       }
     },
 
+    computed: {
+      imageThumbnail () {
+        if (this.event.image) {
+          return `${this.$store.state.settings.items.image_root_path}/${this.event.image.path}/thumbnail/${this.event.image.url}`
+        }
+      }
+    },
+
     methods: {
       updateBody (content) {
         this.event.description = content
       },
       addNewLocation () {
         this.event.location = {}
+      },
+      onImageUploaded (imageModel) {
+        this.event.image = imageModel
       },
       updateEvent () {
         let vm = this
@@ -144,6 +220,8 @@
 
     components: {
       Loading,
+      Checkbox,
+      ImageUpload,
       Accordion,
       Location,
       Multiselect
@@ -153,6 +231,21 @@
 
 <style lang="scss">
 
-  // @import "~assets/scss/global/variables";
+  @import "~assets/scss/global/variables";
+
+  .hero{
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    margin-left: -$space-2;
+    width: calc(100% + #{$space-3});
+    img{
+      display: block;
+      position: absolute;
+      top:50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%)
+    }
+  }
 
 </style>

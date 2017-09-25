@@ -1,6 +1,6 @@
 <template>
   <div class="accordion" :class="{'open': isOpen}" :style="{ height: accordionHeight + 'px' }">
-    <h1 @click="toggle" ref="handle" class="accordion-handle border-bottom py2 px3">{{ title }}</h1>
+    <h1 @click="toggle" ref="handle" class="accordion-handle" :class="this.handleClass">{{ title }}</h1>
     <div ref="content" class="accordion-content">
       <slot></slot>
     </div>
@@ -14,15 +14,19 @@
         type: String,
         required: true
       },
-      default: {
+      defaultState: {
         type: Boolean,
         default: true
+      },
+      handleClass: {
+        type: String,
+        default: ''
       }
     },
 
     data () {
       return {
-        isOpen: this.default,
+        isOpen: this.defaultState,
         handleHeight: 60,
         contentHeight: 0
       }

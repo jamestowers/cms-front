@@ -1,0 +1,169 @@
+<template>
+  <div class="checkbox">
+    <input @change="updateValue" type="checkbox" :value="value" :checked="isChecked" :id="id" />
+    <div></div>
+    <label :for="id">{{ label }}</label>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    value: {
+      type: [String, Number, Boolean],
+      default: '1'
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    }
+  },
+
+  data () {
+    return {
+      isChecked: this.value
+    }
+  },
+
+  methods: {
+    updateValue () {
+      this.isChecked = !this.isChecked
+      this.$emit('input', this.isChecked)
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+  
+  @import "~assets/scss/global/variables";
+
+  input[type="checkbox"], 
+  input[type="radio"] {
+    display: inline;
+    margin-right: 5px;
+    & + label{
+      clear: none;
+      display: inline;
+      margin-right: 10px;
+      padding-right:0;
+    }
+  }
+
+  .checkbox{
+    position: relative;
+    padding: 2px;
+    &:not(:first-child){
+      border-top: $border-width solid $border-color;
+    }
+    &:hover{
+      input[type="checkbox"] {
+        & + div {
+          border-color: $grey5;
+          &:before,
+          &:after {
+            background-color: $grey5;
+          }
+        }
+      }
+    }
+    label {
+      position: absolute;
+      left: 0;
+      padding-left: 40px;
+      min-height:26px;
+      width:100%;
+      cursor: pointer;
+      display: inline-block;
+    }
+  }
+
+  .checkbox input[type="checkbox"] {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    & + div {
+      cursor: pointer;
+      display: inline-block;
+      margin-right:10px;
+      vertical-align: middle;
+      width:26px;
+      height: 26px;
+      border: 1px solid $grey6;
+      border-radius: 999px;
+      background: $grey8;
+      position: relative;
+      transition: all 0.2s $ease-out-quint;
+      &:before,
+      &:after {
+        content: '';
+        display: block;
+        background: $grey6;
+        border-radius: 2px;
+        position: absolute;
+        width: 2px;
+      }
+      &:before {
+        height: 6px;
+        transform: rotate(-45deg);
+        left: 7px;
+        top: 10px;
+      }
+      &:after {
+        height: 10px;
+        transform: rotate(45deg);
+        left: 12px;
+        top: 6px;
+      }
+    }
+    &:checked + div {
+      border-color: $color-primary;
+      background-color: $color-primary;
+      &:before,
+      &:after {
+        background-color: $white;
+      }
+    }
+    &:active + div:before {
+      
+    }
+    &:focus + div {
+    }
+  }
+
+  .checkbox-small{
+    input[type="checkbox"] {
+      & + div {
+        width:20px;
+        height: 20px;
+        &:before {
+          height: 5px;
+          left: 5px;
+          top: 8px;
+        }
+        &:after {
+          height: 9px;
+          left: 9px;
+          top: 5px;
+        }
+      }
+      &:checked + div {
+        //padding-left: 14px;
+      }
+    }
+    label{
+      font-size: 1.2rem;
+      min-height: 20px;
+      padding-left: 30px;
+    }
+  }
+  
+</style>

@@ -65,7 +65,7 @@
       },
       onEditorChange ({ editor, html, text }) {
         // console.log('editor change!', editor, html, text)
-        this.$emit('input', this.html)
+        this.$emit('input', html)
         // this.value = html
       }
     },

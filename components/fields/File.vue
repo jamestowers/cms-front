@@ -8,20 +8,15 @@
       @drop.stop.prevent="onFileDrop"
       >
 
-      <div 
-        v-if="uploadedFile && uploadedFile.type === 'image'" 
-        class="thumbnail">
-        <img :src="thumbnailUrl" width="200">
-      </div>
-
       <input 
         @change="onFileChange"
         ref="fileInput"
         type="file" 
         :name="name"
-        :id="name" />
+        :id="name"
+        />
       
-      <label :for="name">{{ buttonLabel }}</label>
+      <label :for="name" :class="btnClass">{{ buttonLabel }}</label>
 
       <div v-if="errors.length" class="file-upload-errors">
         <ul>
@@ -41,6 +36,9 @@
   export default {
 
     props: {
+      value: {
+        type: Object
+      },
       label: {
         type: String,
         default: 'Choose file'
@@ -60,6 +58,10 @@
       maxSize: {
         type: Number,
         default: Number.MAX_SAFE_INTEGER
+      },
+      btnClass: {
+        type: String,
+        default: 'btn btn-primary'
       }
     },
 
@@ -67,7 +69,6 @@
       return {
         files: [],
         fileTypes: [],
-        thumbnail: null,
         isUploading: false,
         buttonLabel: this.label,
         draggingOver: false,
@@ -225,5 +226,53 @@
     transition: width 0.4s ease-in-out;
     top: 0;
     left: 0;
+  }
+
+  input[type="file"]{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    -webkit-appearance: none;
+  }
+  input[type="file"] + label {
+      background-color: $color-primary;
+      color:$white;
+      border-radius: 4px;
+      font: 16px $font-header;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      display: inline-block;
+      cursor: pointer;
+      &:before{
+        font-size: 1em;
+        vertical-align: middle;
+      }
+      &.btn-sm{
+        padding: 4px 10px;
+        font-size: 1rem;
+        border-radius: 30px;
+        &:after{
+          border-radius: 30px;
+        }
+        i{
+          font-size: 1.8rem;
+        }
+      }
+  }
+  input[type="file"]:focus + label,
+  input[type="file"] + label:hover {
+      background-color: lighten($color-primary, 7);
+      transition: transform 0.1s ease-in;
+      transform: scale(1.05);
+  }
+  input[type="file"]:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+    * {
+      pointer-events: none;
+    }
   }
 </style>

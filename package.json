@@ -24,7 +24,6 @@
     "vue-flatpickr-component": "^3.0.0",
     "vue-form-generator": "^2.0.0",
     "vue-multiselect": "^2.0.2",
-    "vue-no-ssr": "^0.2.0",
     "vue-quill-editor": "^2.3.0",
     "vuedraggable": "^2.14.1"
   },

@@ -28,8 +28,8 @@
       <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
       
         <div class="form-group border-top py2">
-          <loading v-if="loading"></loading>
           <button @click.prevent="updatepage" type="submit" class="btn-primary">{{ this.editing ? 'Update page' : 'Create page' }}</button>
+          <loading v-show="loading" class="pull-right"></loading>
         </div>
 
       </div>

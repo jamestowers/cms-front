@@ -53,8 +53,8 @@
         </div>
 
         <div class="form-group border-top py2">
-          <loading v-if="loading"></loading>
           <button @click.prevent="updatePost" type="submit" class="btn-primary">{{ this.editing ? 'Update post' : 'Create post' }}</button>
+          <loading v-show="loading" class="pull-right"></loading>
         </div>
 
       </div>
