@@ -15,7 +15,6 @@
   color:$white;
 }
 .bg-darkest{
-  //background-image: url('../images/backgrounds/upfeathers_dark.jpg');
   background-color:$grey2;
   color:$white;
 }
@@ -37,4 +36,7 @@
 }
 .bg-trans{
   background: transparent;
+}
+.patterned{
+  background-image: url('~/assets/images/backgrounds/upfeathers_dark.jpg');
 }

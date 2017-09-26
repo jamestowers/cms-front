@@ -28,6 +28,7 @@ module.exports = {
   router: {
     linkActiveClass: '',
     linkExactActiveClass: 'active'
+    // middleware: ['auth']
   },
 
   css: [
@@ -38,13 +39,25 @@ module.exports = {
   ],
 
   modules: [
+    '@nuxtjs/auth',
+    // ...Axios module should be included AFTER @nuxtjs/auth
     '@nuxtjs/axios'
   ],
 
+  auth: {
+    /* auth options */
+  },
+
   axios: {
-    credentials: false,
+    credentials: true,
     baseURL: process.env.API_URL || 'http://localhost:8000',
-    browserBaseURL: ''
+    browserBaseURL: '',
+    requestInterceptor: (config, { store }) => {
+      if (store.state.auth.token) {
+        config.headers.common['Authorization'] = 'Bearer ' + store.state.auth.token
+      }
+      return config
+    }
   },
 
   plugins: [

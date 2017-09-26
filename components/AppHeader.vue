@@ -24,8 +24,13 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  
+  @import "~assets/scss/global/variables";
+
   header.header{
+    background: $white;
     position: relative;
+    z-index: 2;
   }
 </style>

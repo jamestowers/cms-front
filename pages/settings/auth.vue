@@ -42,7 +42,7 @@
       },
 
       created () {
-        this.getToken()
+        // this.getToken()
       },
 
       methods: {
@@ -55,16 +55,18 @@
             username: vm.username,
             password: vm.password
           }
-          this.$axios.$post('v1/oauth/token', creds)
+          vm.$store.dispatch('auth/login', { fields: creds, endpoint: 'oauth/token' })
+          /* this.$axios.$post('v1/oauth/token', creds)
             .then(response => {
-              vm.access_token = response.data.access_token
-              vm.refresh_token = response.data.refresh_token
-              vm.token_expires_in = response.data.expires_in
-              localStorage.setItem('token', response.data.access_token)
+              console.log(response)
+              vm.access_token = response.access_token
+              vm.refresh_token = response.refresh_token
+              vm.token_expires_in = response.expires_in
+              localStorage.setItem('token', response.access_token)
             })
             .catch(response => {
               // List errors on response...
-            })
+            }) */
         }
       }
     }

@@ -145,6 +145,8 @@
   import _ from 'lodash'
 
   export default {
+    middleware: 'auth',
+
     async asyncData ({ params, app }) {
       let event
       let editing = false
