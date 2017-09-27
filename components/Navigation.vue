@@ -22,9 +22,21 @@
             <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
             <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
             <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
+            <li v-if="$store.getters['auth/loggedIn']"><nuxt-link to="/auth/logout"><i class="icon-basic-lock "></i> Logout</nuxt-link></li>
         </ul>
     </nav>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout () {
+      this.$store.dispatch('auth/logout')
+    }
+  }
+}
+</script>
+
 
 <style lang="scss">
 
