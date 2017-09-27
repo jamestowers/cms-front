@@ -21,14 +21,14 @@ module.exports = {
 
   loading: { color: '#4DC0FF' },
 
-  env: {
+  /* env: {
     baseUrl: process.env.API_URL || 'http://localhost:8000'
-  },
+  }, */
 
   router: {
     linkActiveClass: '',
-    linkExactActiveClass: 'active'
-    // middleware: ['auth']
+    linkExactActiveClass: 'active',
+    middleware: ['auth']
   },
 
   css: [
@@ -39,6 +39,7 @@ module.exports = {
   ],
 
   modules: [
+    '@nuxtjs/dotenv', // Usage: context.env.key or process.env.key
     '@nuxtjs/auth',
     // ...Axios module should be included AFTER @nuxtjs/auth
     '@nuxtjs/axios'
