@@ -18,9 +18,9 @@
       
       <label :for="name" :class="btnClass">{{ buttonLabel }}</label>
 
-      <div v-if="errors.length" class="file-upload-errors">
+      <div v-if="uploadErrors.length" class="file-upload-errors">
         <ul>
-          <li v-for="error in errors" :key="error">{{ error }}</li>
+          <li v-for="error in uploadErrors" :key="error">{{ error }}</li>
         </ul>
       </div>
 
@@ -73,7 +73,7 @@
         buttonLabel: this.label,
         draggingOver: false,
         uploadedFile: null,
-        errors: []
+        uploadErrors: []
       }
     },
 
@@ -125,19 +125,19 @@
 
         // Size limit check
         if (files[0].size <= 0 || files[0].size > this.maxSize * 1024 * 1024) {
-          this.errors.push('The file size exceeds the ' + this.maxSize + 'MB limit.')
+          this.uploadErrors.push('The file size exceeds the ' + this.maxSize + 'MB limit.')
           return
         }
 
         // File type check
         if (this.accept === 'image/*') {
           if (files[0].type.substr(0, 6) !== 'image/') {
-            this.errors.push('This file type is not supported, images only please')
+            this.uploadErrors.push('This file type is not supported, images only please')
             return
           }
         } else {
           if (this.fileTypes.indexOf(files[0].type) === -1) {
-            this.errors.push('This file type is not supported.')
+            this.uploadErrors.push('This file type is not supported.')
             return
           }
         }
