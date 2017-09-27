@@ -2,7 +2,7 @@
     
   <form action="" method="post">
 
-    <div v-if="event.image" class="hero sm-col-12 md-col-12 lg-col-12 mxn2 text-center">
+    <div v-if="event && event.images" class="hero sm-col-12 md-col-12 lg-col-12 mxn2 text-center">
       <img :src="`${this.$store.state.settings.items.image_root_path}/${event.images.xlarge}`" alt="Event hero image">
     </div>
 
@@ -13,12 +13,12 @@
 
         <div class="form-group mb0">
           <label for="title">Title</label>
-          <input v-model="event.title" id="title" type="text">
+          <input v-model="event.title" v-validate="'required'" id="title" name="title" type="text" placeholder="Event title">
+          <span v-show="errors.has('title')" class="field-error is-danger">{{ errors.first('title') }}</span>
         </div>
 
         <div class="form-group">
           <label for="image">Image</label>
-          <!-- <image-upload v-model="event.image" action="/media/upload"></image-upload> -->
           <image-upload 
             @input="onImageUploaded" 
             :value="this.imageThumbnail" 
@@ -91,22 +91,25 @@
             <label for="price">Ticket price</label>
             <div class="input-group light">
               <span class="input-group-addon">£</span>
-              <input v-model="event.price" id="price" type="number" placeholder="Free">
+              <input v-model="event.price" v-validate="'decimal:2'" name="price" id="price" type="text" placeholder="Free">
             </div>
-            <span class="help-block">Leave blank for free entry</span>
           </div>
+          <span v-show="errors.has('price')" class="field-error is-danger">{{ errors.first('price') }}</span>
+          <span class="help-block">Leave blank for free entry</span>
 
           <div class="form-group mb0">
             <label for="places_total">Places / tickets available</label>
-            <input v-model="event.places_total" id="places_total" type="number" placeholder="Unlimited">
-            <span class="help-block">Leave blank for unlimited places</span>
+            <input v-model="event.places_total" v-validate="'decimal:0'" name="places_total" id="places_total" type="text" placeholder="Unlimited">
           </div>
+          <span v-show="errors.has('places_total')" class="field-error is-danger">{{ errors.first('places_total') }}</span>
+          <span class="help-block">Leave blank for unlimited places</span>
 
           <div class="form-group mb0">
             <label for="min_age">Minimum age</label>
-            <input v-model="event.min_age" id="min_age" type="number" placeholder="All ages">
-            <span class="help-block">Leave blank for allow all ages</span>
+            <input v-model="event.min_age" v-validate="'decimal:0'" name="min_age" id="min_age" type="text" placeholder="All ages">
           </div>
+          <span v-show="errors.has('min_age')" class="field-error is-danger">{{ errors.first('min_age') }}</span>
+          <span class="help-block">Leave blank for allow all ages</span>
 
           <div class="form-group mb0">
             
@@ -165,6 +168,7 @@
         event: {
           title: null,
           description: null,
+          image: null,
           start_at: null,
           end_at: null,
           location: null,

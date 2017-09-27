@@ -10,7 +10,8 @@
 
         <div class="form-group mb0">
           <label for="title">Title</label>
-          <input @change="updateSlug" v-model="post.title" id="title" type="text">
+          <input @change="updateSlug" v-model="post.title" v-validate="'required|max:70'" name="title" id="title" type="text">
+          <span v-show="errors.has('title')" class="field-error">{{ errors.first('title') }}</span>
         </div>
         
         <div class="form-group mt1">

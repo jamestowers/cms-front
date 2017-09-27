@@ -2,13 +2,15 @@
   <div class="location">
     <div class="form-group">
       <label for="name">Name</label>
-      <input v-model="location.name" id="title" type="text" placeholder="Venue/location name" required>
+      <input v-model="location.name"  v-validate="'required|max:100'" name="location_name" id="location_name" type="text" placeholder="Venue/location name" required>
+      <span v-show="errors.has('location_name')" class="field-error is-danger">{{ errors.first('location_name') }}</span>
     </div>
 
     <div class="sm-col-12 md-col-12 lg-col-6">
       <div class="form-group mt0 mb2">
         <label for="address_line_1">Address Line 1</label>
-        <input v-model="location.address_line_1" id="address_line_1" type="text" placeholder="Street name">
+        <input v-model="location.address_line_1" v-validate="'required'" name="address_line_1" id="address_line_1" type="text" placeholder="Street name">
+        <span v-show="errors.has('address_line_1')" class="field-error is-danger">{{ errors.first('address_line_1') }}</span>
       </div>
 
       <div class="form-group mt0 mb2">
@@ -35,7 +37,8 @@
 
       <div class="form-group mt0">
         <label for="postcode">Postcode</label>
-        <input v-model="location.postcode" id="postcode" type="text">
+        <input v-model="location.postcode" v-validate="'required'" name="postcode" id="postcode" type="text">
+        <span v-show="errors.has('postcode')" class="field-error is-danger">{{ errors.first('postcode') }}</span>
       </div>
     </div>
 
