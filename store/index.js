@@ -9,7 +9,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit ({dispatch}, { req }) {
+  async nuxtServerInit ({ dispatch }, { req }) {
     return Promise.all([
       dispatch('categories/fetch'),
       dispatch('settings/fetch')
