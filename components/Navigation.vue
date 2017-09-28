@@ -18,6 +18,7 @@
                 </li>
               </ul>
             </li>
+            <li><nuxt-link to="/transactions"><i class="icon-basic-bolt "></i> Transactions</nuxt-link></li>
             <li><nuxt-link to="/users"><i class="icon-basic-postcard-multiple "></i> Users</nuxt-link></li>
             <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
             <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
