@@ -1,11 +1,16 @@
 <template>
   <div class="block-edit flex">
     <div class="content-body p3 bg-white">
-      <h1>Edit {{ field.label }}</h1>
+      <h1 class="page-title">Edit field: {{ field.label }}</h1>
 
       <div class="form-group">
         <label for="label">Label</label>
         <input @keyup.stop="updateField('label', $event.target.value)" :value="field.label" type="text" name="label" id="label" />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input @keyup.stop="updateField('name', $event.target.value)" :value="field.name" type="text" name="name" id="name" />
       </div>
 
       <div class="form-group">
@@ -32,7 +37,7 @@
           <label for="label">Default</label>
           <input @keyup.stop="updateField('default', $event.target.value)" :value="field.default" type="text" name="default" id="default" />
         </div>
-    </div>
+      </div>
 
       <div class="form-group">
         <label for="description">Instruction</label>
@@ -44,8 +49,9 @@
         <checkbox @input="updateField('required', $event)" :is-checked="field.required" label="Field is required" id="is-required"></checkbox>
       </div>
 
-      <div class="form-group">
-        <button @click="save">Save field</button>
+      <div class="form-group text-right">
+        <button @click="save" class="mr2">Save field</button>
+        <button @click="deleteField" class="btn-clear">Delete field</button>
       </div>
     </div>
   </div>
@@ -59,7 +65,15 @@ export default {
   data () {
     return {
       editedFields: {},
-      fieldRequiresOptions: false
+      fieldRequiresOptions: false,
+      blankField: {
+        content_block_id: Number(this.$route.params.block),
+        label: '',
+        name: '',
+        type: 'text',
+        description: '',
+        required: false
+      }
     }
   },
   created () {
@@ -72,9 +86,16 @@ export default {
   },
   computed: {
     field () {
-      return this.$store.state['content-blocks']
-        .items.find(x => x.id === Number(this.$route.params.block))
-        .fields.find(x => x.id === Number(this.$route.params.field))
+      if (Number.isInteger(this.$route.params.field)) {
+        return this.$store.state['content-blocks']
+          .items.find(x => x.id === Number(this.$route.params.block))
+          .fields.find(x => x.id === Number(this.$route.params.field))
+      } else {
+        return this.blankField
+      }
+    },
+    editing () {
+      return this.field.id !== undefined
     }
   },
   methods: {
@@ -113,7 +134,11 @@ export default {
     },
     save () {
       this.prepareParams()
-      this.$axios.put(`admin/content-blocks/fields/${this.field.id}`, this.editedFields)
+      let action = this.editing ? 'updateField' : 'createField'
+      this.$store.dispatch(`content-blocks/${action}`, { id: this.field.id, fields: this.editedFields })
+    },
+    deleteField () {
+      this.$axios.delete(`admin/content-blocks/fields/${this.field.id}`)
     }
   },
   components: {

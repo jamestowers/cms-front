@@ -7,24 +7,31 @@
         <ul class="bg-grey8">
           <li class="nav-header p2 bg-grey5 text-white">Fields</li>
           <span v-if="block.fields.length">
-            <li v-for="field in block.fields" :key="field.id">
-              <nuxt-link :to="{ name: 'blocks-block-fields-field', params: { block: block.id, field: field.id } }" class="px3 py2">{{ field.label }}</nuxt-link>
-            </li>
+            <draggable v-model="block.fields" @start="dragging=true" @end="dragging=false">
+              <li v-for="field in block.fields" :key="field.id">
+                <nuxt-link :to="{ name: 'blocks-block-fields-field', params: { block: block.id, field: field.id } }" class="px3 py2"> {{ field.label }} <br /><span class="field-name">{{ field.name }}</span></nuxt-link>
+              </li>
+            </draggable>
           </span>
-          <button class="btn-sm m2">New field</button>
+          <nuxt-link :to="{ name: 'blocks-block-fields-field', params: { block: block.id, field: 'create' } }" class="m2 btn-sm text-white" role="button">New field</nuxt-link>
         </ul>
       </li>
-      <button class="btn-sm m2">New block type</button>
+      <nuxt-link :to="{ name: 'blocks-block', params: { block: 'create' } }" class="m2 btn-sm text-white" role="button">New block type</nuxt-link>
     </ul>
   </nav>
 </template>
 
 <script>
+import Draggable from 'vuedraggable'
+
 export default {
   computed: {
     blocks () {
       return this.$store.state['content-blocks'].items
     }
+  },
+  components: {
+    Draggable
   }
 }
 </script>
@@ -43,11 +50,17 @@ export default {
         font-family: $font-subheader;
         text-transform: uppercase;
         text-align: center;
+        .field-name{
+          text-transform: none;
+          color: $grey5;
+        }
         a.active-ancestor,
         a.active{
-          background: $grey6;
-          & + ul{
-            display: block
+          &:not([role="button"]){
+            background: $grey6;
+            & + ul{
+              display: block
+            }
           }
         }
         ul{
