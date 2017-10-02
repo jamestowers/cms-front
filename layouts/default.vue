@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <app-header/>
+    <status />
     <div id="main">
       <Navigation />
-      <div id="content" class="px2">
-        <status />
+      <div id="content" class="px flex">
         <nuxt/>
       </div>
     </div>
@@ -25,6 +25,17 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   
+  @import "~assets/scss/global/variables";
+
+  #content{
+    border-top: $border-width solid $border-color;
+    & > div {
+      flex: 1;
+    }
+    .content-body{
+      flex: 1;
+    }
+  }
 </style>

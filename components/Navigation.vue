@@ -23,6 +23,7 @@
             <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
             <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
             <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
+            <li><nuxt-link to="/blocks"><i class="icon-basic-hammer "></i> Content blocks</nuxt-link></li>
             <li v-if="$store.getters['auth/loggedIn']"><nuxt-link to="/auth/logout"><i class="icon-basic-lock "></i> Logout</nuxt-link></li>
         </ul>
     </nav>
@@ -110,6 +111,18 @@ a#menu-toggle{
   }
 }
 
+nav{
+  ul{
+    margin: 0;
+  }
+  li{
+    list-style: none;
+    padding: 0;
+    a{
+      display: inline-block;
+    }
+  }
+}
 nav#admin-nav{
   background: $grey2;
   flex: 0 0 $nav-width;
@@ -119,7 +132,6 @@ nav#admin-nav{
     font-family: $font-subheader;
     text-transform: uppercase;
     text-align: center;
-    margin: 0;
     li{
       font-size:1rem;
       padding: 0;

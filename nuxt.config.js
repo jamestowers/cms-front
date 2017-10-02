@@ -26,9 +26,9 @@ module.exports = {
   }, */
 
   router: {
-    linkActiveClass: '',
-    linkExactActiveClass: 'active',
-    middleware: ['auth']
+    linkActiveClass: 'active-ancestor',
+    linkExactActiveClass: 'active'
+    // middleware: ['auth']
   },
 
   css: [

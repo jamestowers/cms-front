@@ -16,7 +16,7 @@
         <ul v-if="events.length > 0" class="m0">
           <li v-for="event in events" :key="event.id" class="group tr p1">
             <div class="td sm-col-12 md-col-3 lg-col-4 pr1">
-              <nuxt-link :to="{ name: 'events-id', params: { id: event.id }}"><i v-if="event.private" class="icon-basic-lock" title="private event"></i> {{ event.title }}</nuxt-link>
+              <nuxt-link :to="{ name: 'events-id', params: { id: event.id }}"><i v-if="event.private" class="icon-basic-lock" title="private event" aria-hidden></i> {{ event.title }}</nuxt-link>
             </div>
             <div class="td sm-col-12 md-col-3 lg-col-3 pr1">{{ event.location ? event.location.name : ' ' }}</div>
             <div class="td sm-col-12 md-col-2 lg-col-2 pr1">{{  event.start_at }}</div>

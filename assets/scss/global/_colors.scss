@@ -7,10 +7,25 @@
 .bg-light-grey{
   background-color:lighten($grey7, 2);
 }
-.bg-grey{
+.bg-grey8{
+  background-color:$grey8;
+}
+.bg-grey7{
   background-color:$grey7;
 }
-.bg-dark{
+.bg-grey6{
+  background-color:$grey6;
+}
+.bg-grey5{
+  background-color:$grey5;
+}
+.bg-grey4{
+  background-color:$grey4;
+}
+.bg-grey3{
+  background-color:$grey3;
+}
+.bg-dark2{
   background-color:$grey3;
   color:$white;
 }
@@ -39,4 +54,11 @@
 }
 .patterned{
   background-image: url('~/assets/images/backgrounds/upfeathers_dark.jpg');
+}
+
+.text-white{
+  color: $white !important;
+}
+.text-dark{
+  color: $grey2 !important;
 }
