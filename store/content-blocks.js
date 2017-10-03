@@ -21,6 +21,11 @@ export const mutations = {
     })
   },
 
+  updateBlock (state, block) {
+    let index = state.items.findIndex((x) => x.id === block.id)
+    state.items.splice(index, 1, block)
+  },
+
   addField (state, field) {
     state.items.find((x) => x.id === field.content_block_id).fields.push(field)
   },
@@ -43,10 +48,10 @@ export const mutations = {
 
 export const actions = {
 
-  async saveBlock (context) {
+  /* async saveBlock (context) {
     const data = await this.$axios.$put('/admin/content-blocks')
     context.commit('load', data)
-  },
+  }, */
 
   async createField ({ commit, state }, data) {
     const res = await this.$axios.$post(`/admin/content-blocks/${data.fields.content_block_id}/fields`, data.fields)
@@ -56,6 +61,16 @@ export const actions = {
   async updateField ({ commit, state }, data) {
     const res = await this.$axios.$put(`/admin/content-blocks/fields/${data.id}`, data.fields)
     commit('updateField', res.entity)
+  },
+
+  async createBlock ({ commit, state }, data) {
+    const res = await this.$axios.$post(`/admin/content-blocks`, data.block)
+    commit('addBlock', res.entity)
+  },
+
+  async updateBlock ({ commit, state }, data) {
+    const res = await this.$axios.$put(`/admin/content-blocks/${data.id}`, data.block)
+    commit('updateBlock', res.entity)
   }
   /* async fetch (context) {
     const data = await this.$axios.$get('/admin/content-blocks')

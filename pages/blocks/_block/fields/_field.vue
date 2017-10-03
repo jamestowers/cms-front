@@ -86,12 +86,12 @@ export default {
   },
   computed: {
     field () {
-      if (Number.isInteger(this.$route.params.field)) {
+      if (isNaN(this.$route.params.field)) {
+        return this.blankField
+      } else {
         return this.$store.state['content-blocks']
           .items.find(x => x.id === Number(this.$route.params.block))
           .fields.find(x => x.id === Number(this.$route.params.field))
-      } else {
-        return this.blankField
       }
     },
     editing () {

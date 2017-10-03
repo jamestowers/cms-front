@@ -5,22 +5,22 @@
 
       <div class="container transactions-list table">
         <div class="group p1 th border-bottom">
-          <div class="td sm-col-12 md-col-4 lg-col-5">Item</div>
-          <div class="td sm-col-12 md-col-4 lg-col-1">Amount</div>
-          <div class="td sm-col-12 md-col-4 lg-col-2">Status</div>
-          <div class="td sm-col-12 md-col-4 lg-col-2">Date</div>
-          <div class="td sm-col-12 md-col-4 lg-col-2">Customer</div>
+          <div class="td sm-col-12 md-col-5 lg-col-5">Item</div>
+          <div class="td sm-col-12 md-col-1 lg-col-1">Amount</div>
+          <div class="td sm-col-12 md-col-2 lg-col-2">Status</div>
+          <div class="td sm-col-12 md-col-2 lg-col-2">Date</div>
+          <div class="td sm-col-12 md-col-2 lg-col-2">Customer</div>
         </div>
         <ul v-if="transactions.length > 0" class="m0">
           <li v-for="transaction in transactions" :key="transaction.id" class="group tr p1 transaction" :class="transaction.status">
-            <div class="td sm-col-12 md-col-4 lg-col-5">
+            <div class="td sm-col-12 md-col-5 lg-col-5">
               <i v-if="transaction.status === 'pending'" class="icon-basic-clessidre" title="private event" aria-hidden></i>
               <nuxt-link :to="{ name: 'transactions-id', params: { id: transaction.id }}">{{ transaction.description }}</nuxt-link>
             </div>
-            <div class="td sm-col-12 md-col-4 lg-col-1">{{ transaction.amount_human }}</div>
-            <div class="td sm-col-12 md-col-4 lg-col-2">{{ transaction.status }}</div>
-            <div class="td sm-col-12 md-col-4 lg-col-2">{{ transaction.date }}</div>
-            <div class="td sm-col-12 md-col-4 lg-col-2">{{ transaction.customer.name }}</div>
+            <div class="td sm-col-12 md-col-1 lg-col-1">{{ transaction.amount_human }}</div>
+            <div class="td sm-col-12 md-col-2 lg-col-2">{{ transaction.status }}</div>
+            <div class="td sm-col-12 md-col-2 lg-col-2">{{ transaction.date }}</div>
+            <div class="td sm-col-12 md-col-2 lg-col-2">{{ transaction.customer.name }}</div>
           </li>
         </ul>
       </div>
