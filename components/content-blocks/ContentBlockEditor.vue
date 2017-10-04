@@ -22,7 +22,7 @@ export default {
 
   data () {
     return {
-      values: {}
+      values: this.block.fields
     }
   },
 
