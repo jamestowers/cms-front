@@ -14,6 +14,8 @@ export const mutations = {
     state.fieldTypes = data
   },
 
+  // ------ BLOCKS ------ //
+
   addBlock (state, data) {
     state.items.push({
       key: data.key,
@@ -26,6 +28,13 @@ export const mutations = {
     state.items.splice(index, 1, block)
   },
 
+  deleteBlock (state, blockId) {
+    let index = state.items.findIndex((x) => x.id === blockId)
+    state.items.splice(index, 1)
+  },
+
+  // ------ FIELDS ------ //
+
   addField (state, field) {
     state.items.find((x) => x.id === field.content_block_id).fields.push(field)
   },
@@ -36,44 +45,66 @@ export const mutations = {
     state.items[blockIndex].fields.splice(index, 1, field)
   },
 
-  deleteBlock (state, { setting }) {
-    state.items.splice(state.items.indexOf(setting), 1)
-  },
-
-  deleteField (state, { setting }) {
-    state.items.splice(state.items.indexOf(setting), 1)
+  deleteField (state, field) {
+    let blockIndex = state.items.findIndex((x) => x.id === field.content_block_id)
+    let index = state.items[blockIndex].fields.findIndex((x) => x.id === field.id)
+    state.items[blockIndex].fields.splice(index, 1)
   }
 
 }
 
 export const actions = {
 
-  /* async saveBlock (context) {
-    const data = await this.$axios.$put('/admin/content-blocks')
-    context.commit('load', data)
-  }, */
-
   async createField ({ commit, state }, data) {
     const res = await this.$axios.$post(`/admin/content-blocks/${data.fields.content_block_id}/fields`, data.fields)
-    commit('addField', res.entity)
+    if (res.success) {
+      commit('addField', res.entity)
+      commit('status/set', `${res.entity.label} field created`, { root: true })
+    }
   },
 
   async updateField ({ commit, state }, data) {
     const res = await this.$axios.$put(`/admin/content-blocks/fields/${data.id}`, data.fields)
-    commit('updateField', res.entity)
+    if (res.success) {
+      commit('updateField', res.entity)
+      commit('status/set', `${res.entity.label} field saved`, { root: true })
+    }
+  },
+
+  async deleteField ({ commit, state }, field) {
+    const res = await this.$axios.$delete(`/admin/content-blocks/fields/${field.id}`)
+    if (res.success) {
+      commit('deleteField', field)
+      commit('status/set', `${field.label} field deleted`, { root: true })
+    }
   },
 
   async createBlock ({ commit, state }, data) {
     const res = await this.$axios.$post(`/admin/content-blocks`, data.block)
-    commit('addBlock', res.entity)
+    if (res.success) {
+      commit('addBlock', res.entity)
+      commit('status/set', `${res.entity.title} block created`, { root: true })
+    }
   },
 
   async updateBlock ({ commit, state }, data) {
     const res = await this.$axios.$put(`/admin/content-blocks/${data.id}`, data.block)
-    commit('updateBlock', res.entity)
-  }
-  /* async fetch (context) {
+    if (res.success) {
+      commit('updateBlock', res.entity)
+      commit('status/set', `${res.entity.title} block saved`, { root: true })
+    }
+  },
+
+  async deleteBlock ({ commit, state }, data) {
+    const res = await this.$axios.$delete(`/admin/content-blocks/${data.id}`)
+    if (res.success) {
+      commit('deleteBlock', data.id)
+      commit('status/set', 'Block deleted', { root: true })
+    }
+  },
+
+  async fetch (context) {
     const data = await this.$axios.$get('/admin/content-blocks')
     context.commit('load', data)
-  } */
+  }
 }

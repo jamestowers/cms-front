@@ -4,17 +4,17 @@
     
     <div class="form-group">
       <label for="block-title">Block title</label>
-      <input @keyup.stop="updateBlock('title', $event.target.value)" :value="block.title" type="text" id="block-title">
+      <input @keyup.stop="updateValue('title', $event.target.value)" :value="block.title" type="text" id="block-title">
     </div>
 
     <div class="form-group">
       <label for="block-name">Name</label>
-      <input @keyup.stop="updateBlock('key', $event.target.value)" :value="block.key" type="text" id="block-name">
+      <input @keyup.stop="updateValue('key', $event.target.value)" :value="block.key" type="text" id="block-name">
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea @keyup.stop="updateBlock('description', $event.target.value)" :value="block.description" name="description" id="description"></textarea>
+      <textarea @keyup.stop="updateValue('description', $event.target.value)" :value="block.description" name="description" id="description"></textarea>
       <div class="help-block">Enter any helpful instructions here</div>
     </div>
 
@@ -58,7 +58,7 @@ export default {
   },
 
   methods: {
-    updateBlock (key, value) {
+    updateValue (key, value) {
       this.editedBlock[key] = value
     },
     save () {
@@ -66,7 +66,8 @@ export default {
       this.$store.dispatch(`content-blocks/${action}`, { id: this.block.id, block: this.editedBlock })
     },
     deleteBlock () {
-      this.$axios.delete(`admin/content-blocks/${this.block.id}`)
+      this.$store.dispatch('content-blocks/deleteBlock', { id: this.block.id })
+      this.$nuxt.$router.replace({ name: 'blocks' })
     }
   },
 

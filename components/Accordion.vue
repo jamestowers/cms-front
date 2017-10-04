@@ -33,8 +33,9 @@
     },
 
     mounted () {
-      this.handleHeight = this.$refs.handle.clientHeight
-      this.contentHeight = this.$refs.content.clientHeight
+      this.$nextTick(() => {
+        this.getHeights()
+      })
     },
 
     computed: {
@@ -46,6 +47,10 @@
     methods: {
       toggle () {
         this.isOpen = !this.isOpen
+      },
+      getHeights () {
+        this.handleHeight = this.$refs.handle.clientHeight
+        this.contentHeight = this.$refs.content.clientHeight
       }
     }
   }

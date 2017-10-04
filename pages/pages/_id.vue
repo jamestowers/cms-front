@@ -1,6 +1,6 @@
 <template>
     
-  <form action="" method="post">
+  <form action="" method="post" class="flex-row">
 
     <div class="clearfix mxn2 flex">
 
@@ -19,13 +19,12 @@
             <input v-model="page.slug" id="slug" type="text" class="slug-input small sm-col-12 md-col-4 lg-col-4">
           </div>
         </div>
-        <div class="form-group">
-          <label for="body">Content</label>
-          <wysiwyg v-model="page.content"></wysiwyg>
-        </div>
+
+        <content-block-composer v-model="page.blocks"></content-block-composer>
+        
       </div>
 
-      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
+      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey7 p3">
       
         <div class="form-group border-top py2">
           <button @click.prevent="updatepage" type="submit" class="btn-primary">{{ this.editing ? 'Update page' : 'Create page' }}</button>
@@ -42,6 +41,7 @@
 
 <script>
   import Loading from '~/components/Loading'
+  import ContentBlockComposer from '~/components/content-blocks/ContentBlockComposer'
 
   export default {
 
@@ -60,7 +60,8 @@
           title: null,
           slug: null,
           content: null,
-          template: null
+          template: null,
+          blocks: null
         }
       }
     },
@@ -98,7 +99,8 @@
     },
 
     components: {
-      Loading
+      Loading,
+      ContentBlockComposer
     }
   }
 </script>

@@ -5,12 +5,13 @@
 
       <div class="form-group">
         <label for="label">Label</label>
-        <input @keyup.stop="updateField('label', $event.target.value)" :value="field.label" type="text" name="label" id="label" />
+        <input @keyup.stop="updateField('label', $event.target.value)" :value="field.label" placeholder="Enter a title for this field" type="text" name="label" id="label" />
       </div>
 
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Key</label>
         <input @keyup.stop="updateField('name', $event.target.value)" :value="field.name" type="text" name="name" id="name" />
+        <div class="help-block">Make this what you want, it is used to reference the field in the component template and is usually a lowercase version of the title, without spaces</div>
       </div>
 
       <div class="form-group">
@@ -46,6 +47,12 @@
       </div>
 
       <div class="form-group">
+        <label for="containerClass">Container class</label>
+        <input @keyup.stop="updateField('container_class', $event.target.value)" :value="field.container_class" type="text" name="container_class" id="container_class" />
+        <div class="help-block">Optionally add classes to the container div in the edit windows</div>
+      </div>
+
+      <div class="form-group">
         <checkbox @input="updateField('required', $event)" :is-checked="field.required" label="Field is required" id="is-required"></checkbox>
       </div>
 
@@ -66,12 +73,13 @@ export default {
     return {
       editedFields: {},
       fieldRequiresOptions: false,
-      blankField: {
+      emptyField: {
         content_block_id: Number(this.$route.params.block),
         label: '',
         name: '',
-        type: 'text',
+        type: '',
         description: '',
+        container_class: '',
         required: false
       }
     }
@@ -79,15 +87,17 @@ export default {
   created () {
     this.setFieldRequiresOptions()
   },
-  updated () {
-    if (this.field) {
+
+  watch: {
+    '$route': function (val) {
       this.setFieldRequiresOptions()
     }
   },
+
   computed: {
     field () {
       if (isNaN(this.$route.params.field)) {
-        return this.blankField
+        return this.emptyField
       } else {
         return this.$store.state['content-blocks']
           .items.find(x => x.id === Number(this.$route.params.block))
@@ -98,6 +108,7 @@ export default {
       return this.field.id !== undefined
     }
   },
+
   methods: {
     updateField (key, value) {
       this.editedFields[key] = value
@@ -107,21 +118,26 @@ export default {
     },
     setFieldRequiresOptions () {
       this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(this.field.type)
-      this.renderChoices()
+      if (this.field.options) {
+        this.renderChoices()
+      }
     },
     renderChoices () {
       let options = ''
-      for (let key in this.field.options) {
-        options += `${key}:${this.field.options[key]}\n`
+      for (let opt in this.field.options) {
+        options += `${this.field.options[opt].key}:${this.field.options[opt].value}\n`
       }
       this.editedFields.options = options
     },
     parseChoices () {
-      let choices = {}
+      let choices = []
       let parts = this.editedFields.options.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
       for (var i = 0, len = parts.length; i < len; i++) {
         var match = parts[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
-        choices[match[1]] = match[2]
+        choices.push({
+          key: match[1],
+          value: match[2]
+        })
       }
       return choices
     },
@@ -129,7 +145,7 @@ export default {
       this.editedFields['content_block_id'] = this.$route.params.block
       if (this.fieldRequiresOptions) {
         this.editedFields.options = this.parseChoices()
-        delete this.editedFields.options
+        // delete this.editedFields.options
       }
     },
     save () {
@@ -138,9 +154,11 @@ export default {
       this.$store.dispatch(`content-blocks/${action}`, { id: this.field.id, fields: this.editedFields })
     },
     deleteField () {
-      this.$axios.delete(`admin/content-blocks/fields/${this.field.id}`)
+      this.$store.dispatch(`content-blocks/deleteField`, this.field)
+      this.$nuxt.$router.replace({ name: 'blocks-block', params: {block: this.field.content_block_id} })
     }
   },
+
   components: {
     Checkbox,
     Multiselect
