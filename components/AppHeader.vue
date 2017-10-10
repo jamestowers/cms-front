@@ -1,13 +1,14 @@
 <template>
-    <header class="header group p1">
+    <header class="header group">
 
-      <div class="logo">
+      <div class="logo p1">
         <img :src="logo" width="40" />
       </div>
+      <div class="p1">
+        <h1 id="logo-text" class="m0 pull-left v-align">{{ site_name }}</h1>
 
-      <h1 id="logo-text" class="m0 pull-left v-align">{{ site_name }}</h1>
-
-      <a href="#" id="menu-toggle"><span></span></a>
+        <a href="#" id="menu-toggle"><span></span></a>
+      </div>
 
     </header>
 </template>

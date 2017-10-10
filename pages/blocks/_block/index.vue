@@ -1,6 +1,6 @@
 <template>
   <div class="content-body bg-white">
-    <div class="block-editor border-bottom p3 bg-grey4 text-white">
+    <div class="block-editor border-bottom p3 bg-grey3 text-white">
       <h1 class="page-title m0">Edit block: {{ block.title }}</h1>
       <div class="actions mb2">
         <ul class="inline small m0">
@@ -32,7 +32,7 @@
       @end="dragging=false">
       <accordion 
         :title="field.label" 
-        handle-class="bg-grey6 px3 py2 m0" 
+        handle-class="bg-grey6 px3 py1 m0" 
         v-for="field in block.fields" 
         :key="field.id"
         class=""

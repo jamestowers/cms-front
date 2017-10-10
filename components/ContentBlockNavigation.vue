@@ -56,7 +56,7 @@ export default {
         a.active-ancestor,
         a.active{
           &:not([role="button"]){
-            background: $grey4;
+            background: $grey3;
             color: $white;
             & + ul{
               display: block

@@ -30,7 +30,6 @@
   @import "~assets/scss/global/variables";
 
   #content{
-    border-top: $border-width solid $border-color;
     & > div {
       flex: 1;
     }

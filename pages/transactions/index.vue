@@ -1,6 +1,6 @@
 <template>
   <div class="clearfix">
-    <div class="py3 px2">
+    <div class="p3">
       <page-title>Transactions</page-title>
 
       <div class="container transactions-list table">
