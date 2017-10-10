@@ -1,7 +1,10 @@
 <template>
   <div class="checkbox">
+    <span class="checkbox-runner"></span>
     <input @change="updateValue" type="checkbox" :value="value" :checked="isChecked" :id="id" />
-    <div></div>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><polyline points="13 33 25 45 49 21 " style="fill:none;stroke-linejoin:bevel;stroke-width:4;"/></svg>
+    </div>
     <label :for="id">{{ label }}</label>
   </div>
 </template>
@@ -63,6 +66,9 @@ export default {
       input[type="checkbox"] {
         & + div {
           border-color: $grey5;
+          svg{
+            stroke: $grey5;
+          }
           &:before,
           &:after {
             background-color: $grey5;
@@ -70,10 +76,20 @@ export default {
         }
       }
     }
+    .checkbox-runner{
+      background: $grey7;
+      border-radius: 20px;
+      height:20px;
+      position: absolute;
+      top: 5px;
+      left: 2px;
+      width: 40px;
+      display: block;
+    }
     label {
       position: absolute;
       left: 0;
-      padding-left: 40px;
+      padding-left: 56px;
       min-height:26px;
       width:100%;
       cursor: pointer;
@@ -101,34 +117,25 @@ export default {
       background: $grey8;
       position: relative;
       transition: all 0.2s $ease-out-quint;
-      &:before,
-      &:after {
-        content: '';
-        display: block;
-        background: $grey6;
-        border-radius: 2px;
-        position: absolute;
-        width: 2px;
-      }
-      &:before {
-        height: 6px;
-        transform: rotate(-45deg);
-        left: 7px;
-        top: 10px;
-      }
-      &:after {
-        height: 10px;
-        transform: rotate(45deg);
-        left: 12px;
-        top: 6px;
+      transform: translateX(15px);
+      svg{
+        display: none;
+        /* polyline,
+        path{
+          stroke: $grey6;
+        } */
       }
     }
     &:checked + div {
       border-color: $color-primary;
       background-color: $color-primary;
-      &:before,
-      &:after {
-        background-color: $white;
+      transform: translateX(0);
+      svg{
+        display: block;
+        polyline,
+        path{
+          stroke: $white;
+        }
       }
     }
     &:active + div:before {
