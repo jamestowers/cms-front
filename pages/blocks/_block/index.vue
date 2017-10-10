@@ -20,19 +20,25 @@
       </div>
     </div>
 
-    <accordion 
-      :title="field.label" 
-      handle-class="bg-grey7 px3 py2 m0" 
-      v-for="field in block.fields" 
-      :key="field.id"
-      class="mt1"
-      >
-      <content-block-field-group 
-        :block-id="block.id"
-        :field="field"
+    <draggable 
+      v-model="block.fields" 
+       :options="{draggable:'.drag-handle'}"
+      @start="dragging=true" 
+      @end="dragging=false">
+      <accordion 
+        :title="field.label" 
+        handle-class="bg-grey7 px3 py2 m0" 
+        v-for="field in block.fields" 
+        :key="field.id"
+        class="mt1"
         >
-        </content-block-field-group>
-    </accordion>
+        <content-block-field-group 
+          :block-id="block.id"
+          :field="field"
+          >
+          </content-block-field-group>
+      </accordion>
+    </draggable>
 
     <div class="form-group text-right mt1">
       <button @click="save" class="mr2">Save block</button>
@@ -45,6 +51,7 @@
 
 <script>
 import Loading from '~/components/Loading'
+import Draggable from 'vuedraggable'
 import ContentBlockFieldGroup from '~/components/content-blocks/ContentBlockFieldGroup'
 import Accordion from '~/components/Accordion'
 
@@ -92,7 +99,8 @@ export default {
   components: {
     Loading,
     ContentBlockFieldGroup,
-    Accordion
+    Accordion,
+    Draggable
   }
 }
 </script>

@@ -1,9 +1,19 @@
 <template>
   <div class="accordion" :class="{'open': isOpen}" :style="{ height: accordionHeight + 'px' }">
-    <h1 @click="toggle" ref="handle" class="accordion-handle" :class="this.handleClass">{{ title }}</h1>
+    <div @click="toggle" ref="handle" class="accordion-handle" :class="this.handleClass">
+      
+      <div class="drag-handle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 64 64"><style>.a{fill:none;stroke-linejoin:bevel;stroke-width:2;stroke:#000;}.b{fill:none;stroke-width:2;stroke:#000;}</style><polyline points="56 39 63 32 56 25 " class="a"/><polyline points="8 25 1 32 8 39 " class="a"/><line x1="1" y1="32" x2="32" y2="32" class="b"/><line x1="32" y1="32" x2="63" y2="32" class="b"/><polyline points="39 8 32 1 25 8 " class="a"/><polyline points="25 56 32 63 39 56 " class="a"/><line x1="32" y1="63" x2="32" y2="32" class="b"/><line x1="32" y1="32" x2="32" y2="1" class="b"/></svg>
+      </div>
+      
+      <h1 class="m0">{{ title }}</h1>
+    
+    </div>
+
     <div ref="content" class="accordion-content">
       <slot></slot>
     </div>
+
   </div>
 </template>
 
@@ -56,7 +66,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import "~assets/scss/global/variables";
 
   .accordion{
@@ -83,5 +93,10 @@
       transition: transform 0.2s $ease-out-circle;
       content: "";
     }
+  }
+  .drag-handle{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%) translateX(-27px);
   }
 </style>

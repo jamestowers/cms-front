@@ -53,19 +53,13 @@
       <div class="form-group">
         <checkbox @input="updateField('required', $event)" :value="field.required" label="Field is required" id="is-required"></checkbox>
       </div>
-
-      <!-- <div class="form-group text-right">
-        <button @click="save" class="mr2">Save field</button>
-        <button @click="deleteField" class="btn-clear">Delete field</button>
-      </div> -->
-
+      
   </div>
 </template>
 
 <script>
 import Multiselect from 'vue-multiselect'
 import Checkbox from '~/components/fields/Checkbox.vue'
-// import _ from 'lodash'
 
 export default {
   props: {
@@ -89,38 +83,15 @@ export default {
 
   data () {
     return {
-      // updatedField: {},
       updatedField: _.clone(this.field),
       fieldRequiresOptions: false
-      /* emptyField: {
-        content_block_id: this.blockId,
-        label: '',
-        name: '',
-        type: '',
-        description: '',
-        container_class: '',
-        required: false
-      } */
     }
   },
   created () {
     this.setFieldRequiresOptions()
   },
 
-  /* watch: {
-    '$route': function (val) {
-      this.setFieldRequiresOptions()
-    }
-  }, */
-
   computed: {
-    /* updatedField () {
-      if (this.field.id) {
-        return this.field
-      } else {
-        return this.emptyField
-      }
-    }, */
     editing () {
       return this.field.id !== undefined
     }
@@ -132,8 +103,8 @@ export default {
       if (key === 'type') {
         this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
       }
-
-      this.$store.dispatch('content-blocks/updateField', this.updatedField)
+      this.$store.commit('content-blocks/updateField', this.updatedField) // Updates store only
+      // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
     },
 
     setFieldRequiresOptions () {
