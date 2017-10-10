@@ -28,7 +28,7 @@
       <div v-if="fieldRequiresOptions">
         <div class="form-group">
           <label for="description">Choices</label>
-          <textarea @blur.stop="updateField('options', $event.target.value)" :value="updatedField.options" name="options" id="options"></textarea>
+          <textarea @blur.stop="choices = $event.target.value" :value="choices" name="options" id="options"></textarea>
           <div class="help-block">Enter possible choices in the format <code>value:label</code>, one per line. eg: <code>m:Male</code> </div>
         </div>
 
@@ -89,11 +89,33 @@ export default {
   },
   created () {
     this.setFieldRequiresOptions()
+    // this.renderChoices()
   },
 
   computed: {
     editing () {
       return this.field.id !== undefined
+    },
+    choices: {
+      get () {
+        let options = ''
+        for (let opt in this.updatedField.options) {
+          options += `${this.updatedField.options[opt].key}:${this.updatedField.options[opt].value}\n`
+        }
+        return options
+      },
+      set (newValue) {
+        let choices = []
+        let parts = newValue.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
+        for (var i = 0, len = parts.length; i < len; i++) {
+          var match = parts[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
+          choices.push({
+            key: match[1],
+            value: match[2]
+          })
+        }
+        this.updateField('options', choices)
+      }
     }
   },
 
@@ -107,14 +129,19 @@ export default {
       // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
     },
 
-    setFieldRequiresOptions () {
-      this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(this.field.type)
-      if (this.field.options) {
-        this.renderChoices()
-      }
+    parseChoicesThenUpdateField (key, value) {
+      let options = this.parseChoices(value)
+      this.updateField(key, options)
     },
 
-    renderChoices () {
+    setFieldRequiresOptions () {
+      this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(this.field.type)
+      /* if (this.field.options) {
+        this.renderChoices()
+      } */
+    },
+
+    /* renderChoices () {
       let options = ''
       for (let opt in this.field.options) {
         options += `${this.field.options[opt].key}:${this.field.options[opt].value}\n`
@@ -122,9 +149,9 @@ export default {
       this.updatedField.options = options
     },
 
-    parseChoices () {
+    parseChoices (options) {
       let choices = []
-      let parts = this.updatedField.options.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
+      let parts = options.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
       for (var i = 0, len = parts.length; i < len; i++) {
         var match = parts[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
         choices.push({
@@ -133,9 +160,9 @@ export default {
         })
       }
       return choices
-    },
+    }, */
 
-    prepareParams () {
+    /* prepareParams () {
       this.updatedField['content_block_id'] = this.$route.params.block
       if (this.fieldRequiresOptions) {
         this.updatedField.options = this.parseChoices()
@@ -147,7 +174,7 @@ export default {
       this.prepareParams()
       let action = this.editing ? 'updateField' : 'createField'
       this.$store.dispatch(`content-blocks/${action}`, { id: this.field.id, fields: this.updatedField })
-    },
+    }, */
 
     deleteField () {
       this.$store.dispatch(`content-blocks/deleteField`, this.field)

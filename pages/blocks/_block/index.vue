@@ -1,8 +1,13 @@
 <template>
   <div class="content-body bg-white">
     <div class="block-editor border-bottom p3 bg-grey4 text-white">
-      <h1 class="page-title">Edit block: {{ block.title }}</h1>
-      
+      <h1 class="page-title m0">Edit block: {{ block.title }}</h1>
+      <div class="actions mb2">
+        <ul class="inline small m0">
+          <li><a href="" class="pr2 is-error">Delete block</a></li>
+          <li><a href="" class="pr2 text-white">Add field group</a></li>
+        </ul>
+      </div>
       <div class="form-group">
         <label for="block-title">Block title</label>
         <input @keyup.stop="updateValue('title', $event.target.value)" :value="block.title" type="text" id="block-title">
@@ -27,10 +32,10 @@
       @end="dragging=false">
       <accordion 
         :title="field.label" 
-        handle-class="bg-grey7 px3 py2 m0" 
+        handle-class="bg-grey6 px3 py2 m0" 
         v-for="field in block.fields" 
         :key="field.id"
-        class="mt1"
+        class=""
         >
         <content-block-field-group 
           :block-id="block.id"
@@ -87,8 +92,9 @@ export default {
       this.editedBlock[key] = value
     },
     save () {
+      console.log(this.block.fields[1].options)
       let action = this.editing ? 'updateBlock' : 'createBlock'
-      this.$store.dispatch(`content-blocks/${action}`, { id: this.block.id, block: this.editedBlock })
+      this.$store.dispatch(`content-blocks/${action}`, { id: this.block.id, block: this.block })
     },
     deleteBlock () {
       this.$store.dispatch('content-blocks/deleteBlock', { id: this.block.id })
