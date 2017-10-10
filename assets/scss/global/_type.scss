@@ -1,8 +1,15 @@
 @import "variables";
 @import "mixins";
 
-@font-face {
+// @import url('https://fonts.googleapis.com/css?family=Nunito:800');
+// @import url('https://fonts.googleapis.com/css?family=Lato:700');
+
+/* @font-face {
   @include font-face('Gilroy-ExtraBold', 'Gilroy/');
+} */
+
+@font-face {
+  @include font-face('Colfax-Medium', 'Colfax/');
 }
 
 html{
@@ -90,14 +97,14 @@ H1, H2, H3, H4, H5 STYLES
 ******************************************************************/
 
 .page-title{
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: 1.1;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
   font-family: $font-header;
   font-weight: $font-weight-normal;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   a{
     color:$grey2;
     &:hover{

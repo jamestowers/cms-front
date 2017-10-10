@@ -64,7 +64,7 @@ export const actions = {
   },
 
   async updateField ({ commit, state }, data) {
-    const res = await this.$axios.$put(`/admin/content-blocks/fields/${data.id}`, data.fields)
+    const res = await this.$axios.$put(`/admin/content-blocks/fields/${data.id}`, data)
     if (res.success) {
       commit('updateField', res.entity)
       commit('status/set', `${res.entity.label} field saved`, { root: true })

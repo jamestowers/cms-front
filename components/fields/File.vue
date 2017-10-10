@@ -18,7 +18,7 @@
       
       <label :for="name" :class="btnClass">{{ buttonLabel }}</label>
 
-      <div v-if="uploadErrors.length" class="file-upload-errors">
+      <div v-if="uploadErrors.length" class="is-error">
         <ul>
           <li v-for="error in uploadErrors" :key="error">{{ error }}</li>
         </ul>
@@ -86,9 +86,6 @@
         return {
           'dragging-over': this.draggingOver
         }
-      },
-      thumbnailUrl () {
-        return `${this.$store.state.settings.items.image_root_path}/${this.uploadedFile.path}/thumbnail/${this.uploadedFile.url}`
       }
     },
 
@@ -154,6 +151,7 @@
 
       uploadFile () {
         this.isUploading = true
+        this.$emit('uploadStart')
         let self = this
         let data = new FormData()
         data.append('file', this.files[0])
@@ -199,14 +197,6 @@
   .file-upload {
     &.dragging-over {
       background: $grey7;
-    }
-  }
-
-  .file-upload-errors {
-    color: $color-error;
-    font-weight: $font-weight-bold;
-    ul {
-      margin: 0;
     }
   }
 

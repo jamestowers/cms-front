@@ -7,5 +7,6 @@
 [class^="lg-col"], [class*=" lg-col"] {
   // float: left;
   display: inline-block;
+  vertical-align: top;
   box-sizing: border-box;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="py3 px2">
+  <div class="p3">
     <page-title>Dashboard</page-title>
   </div>
 </template>

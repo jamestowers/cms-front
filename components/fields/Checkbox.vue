@@ -10,8 +10,7 @@
 export default {
   props: {
     value: {
-      type: [String, Number, Boolean],
-      default: '1'
+      type: [String, Number, Boolean]
     },
     id: {
       type: String,

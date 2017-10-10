@@ -1,6 +1,6 @@
 <template>
     
-  <form action="" method="POST">
+  <form action="" method="POST" class="flex-row">
 
     <div class="clearfix mxn2 flex">
 
@@ -21,17 +21,9 @@
             <input v-model="post.slug" id="slug" type="text" class="slug-input small sm-col-12 md-col-4 lg-col-4">
           </div>
         </div>
+        
+        <content-block-composer v-model="post.blocks"></content-block-composer>
 
-        <div class="form-group">
-          <label for="body">Content</label>
-          <wysiwyg v-model="post.body"></wysiwyg>
-        </div>
-        
-        <div class="form-group">
-          <label for="excerpt">Excerpt</label>
-          <wysiwyg v-model="post.excerpt"></wysiwyg>
-        </div>
-        
         <div class="form-group">
           <label for="files">Files</label>
           <file-upload @file-uploaded="onFileUploaded" :current-files="post.media" :url="mediaUploadUrl"></file-upload>
@@ -39,7 +31,7 @@
       
       </div>
 
-      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey p3">
+      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey7 p3">
       
         <label for="">Categories</label>
         <category-select @updated="updateCategories" :default="defaultCategoryIds"></category-select>
@@ -70,6 +62,7 @@
   import Loading from '~/components/Loading'
   import CategorySelect from '~/components/fields/Categories'
   import FileUpload from '~/components/fields/Files'
+  import ContentBlockComposer from '~/components/content-blocks/ContentBlockComposer'
   import _ from 'lodash'
 
   export default {
@@ -88,10 +81,9 @@
         post: {
           title: null,
           slug: null,
-          body: null,
-          excerpt: null,
           categories: [],
-          media: []
+          media: [],
+          blocks: null
         },
         categoryIds: [],
         uploadedFiles: [],
@@ -168,7 +160,8 @@
     components: {
       Loading,
       CategorySelect,
-      FileUpload
+      FileUpload,
+      ContentBlockComposer
     }
   }
 </script>

@@ -10,8 +10,8 @@ a.close{
   color: $grey2;
   font-weight: $font-weight-normal;
   line-height:1;
-  height: 20px;
-  width:20px;
+  height: 24px;
+  width:24px;
   padding: 4px;
   margin: 0;
   &:before,
@@ -21,10 +21,10 @@ a.close{
     background: $grey5;
     border-radius: 2px;
     position: absolute;
-    height:10px;
+    height:12px;
     width: 2px;
-    left: 8px;
-    top: 4px;
+    left: 11px;
+    top: 6px;
   }
   &:before {
     transform: rotate(-45deg);

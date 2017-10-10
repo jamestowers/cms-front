@@ -1,13 +1,19 @@
 <template>
   <div class="block-textarea">
     <label>{{ field.label }}</label>
-    <textarea @change="onChange" :value="field.default" ref="input"></textarea>
+    <textarea @change="onChange" :value="defaultValue" ref="input"></textarea>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['field'],
+  props: ['value', 'field'],
+
+  computed: {
+    defaultValue () {
+      return this.value ? this.value : this.field.default
+    }
+  },
 
   methods: {
     onChange () {

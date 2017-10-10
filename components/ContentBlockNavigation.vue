@@ -3,11 +3,12 @@
   <nav class="sub-nav sm-col-12 md-col-4">
     
     <ul class="bg-grey7 text-center">
-      <li class="nav-header p2 text-center bg-grey4 text-white">Blocks</li>
+      <li class="nav-header p2 text-center bg-grey5 text-white">Blocks</li>
+      <draggable v-model="block" @start="dragging=true" @end="dragging=false">
       <li v-for="block in blocks" :key="block.id">
         <nuxt-link :to="{ name: 'blocks-block', params: { block: block.id } }" class="px3 py2">{{ block.title }}</nuxt-link>
         
-        <ul class="bg-grey8">
+        <!-- <ul class="bg-grey8">
           <li class="nav-header p2 bg-grey5 text-white">Fields</li>
           <span v-if="block.fields.length">
             
@@ -19,9 +20,10 @@
           
           </span>
           <nuxt-link :to="{ name: 'blocks-block-fields-field', params: { block: block.id, field: 'create' } }" class="m2 btn-sm text-white" role="button">New field</nuxt-link>
-        </ul>
+        </ul> -->
 
       </li>
+      </draggable>
       <nuxt-link :to="{ name: 'blocks-block', params: { block: 'create' } }" class="m2 btn-sm text-white" role="button">New block type</nuxt-link>
     </ul>
 
@@ -48,14 +50,14 @@ export default {
   @import "~assets/scss/global/variables";
 
   nav.sub-nav{
-    max-width:380px;
+    max-width:200px;
     ul{
       position: relative;
       height: 100%;
-      width:50%;
+      width:100%;
       li{
         font-size: 1rem;
-        font-family: $font-subheader;
+        font-family: $font-body;
         text-transform: uppercase;
         text-align: center;
         .field-name{
@@ -65,7 +67,8 @@ export default {
         a.active-ancestor,
         a.active{
           &:not([role="button"]){
-            background: $grey6;
+            background: $grey4;
+            color: $white;
             & + ul{
               display: block
             }

@@ -1,6 +1,6 @@
 <template>
   <div class="clearfix">
-    <div class="py3 px2">
+    <div class="p3">
       <page-title>Posts</page-title>
 
       <nuxt-link :to="{ path: 'posts/new' }" class="btn-sm" role="button">Add new</nuxt-link>

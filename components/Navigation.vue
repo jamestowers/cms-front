@@ -178,7 +178,8 @@ nav#admin-nav{
       color: $white;
       text-align: center;
       transition-duration: 0.1s;
-      &.active{
+      &.active,
+      &.active-ancestor{
         background: $grey4;
       }
       &:hover{

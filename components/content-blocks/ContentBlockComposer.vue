@@ -1,7 +1,9 @@
 <template>
   <div class="content-block-composer">
     
-    <content-block-editor @input="setContent" v-for="(block, index) in blocks" :key="index" :block="block" :index="index"></content-block-editor>
+    <draggable v-model="blocks" :options="{ handle:'.drag-handle', draggable:'.content-block-editor' }" @start="dragging=true" @end="dragging=false">
+      <content-block-field-group @input="setContent" v-for="(block, index) in blocks" :key="index" :block="block" :index="index"></content-block-field-group>
+    </draggable>
 
     <div class="content-block-composer-buttons mt2 border-top">
       <ul class="inline">
@@ -15,40 +17,36 @@
 </template>
 
 <script>
-import ContentBlockEditor from '~/components/content-blocks/ContentBlockEditor.vue'
+import ContentBlockFieldGroup from '~/components/content-blocks/ContentBlockFieldGroup.vue'
+import Draggable from 'vuedraggable'
 
 export default {
   props: ['value'],
 
   data () {
     return {
-      blocks: this.value
+      blocks: this.value,
+      dragging: false
     }
   },
 
   methods: {
     insertBlock (block) {
-      // let fields = this.$store.state['content-blocks'].items.find(x => x.key === block.key).fields
       this.blocks.push({
         type: block.type,
         fields: {}
       })
     },
+
     setContent (data) {
       this.blocks[data.blockIndex].fields = data.values
       this.$emit('input', this.blocks)
-    },
-    getKeysFromBlockFields (fields) {
-      let arr = {}
-      for (let field of fields) {
-        arr[field.name] = ''
-      }
-      return arr
     }
   },
 
   components: {
-    ContentBlockEditor
+    ContentBlockFieldGroup,
+    Draggable
   }
 }
 </script>

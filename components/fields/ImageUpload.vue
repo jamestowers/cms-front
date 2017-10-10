@@ -84,7 +84,6 @@
   @import "~assets/scss/global/variables";
 
   .image-upload{
-    background: $grey7;
     height: 200px;
     width: 200px;
     display:flex;

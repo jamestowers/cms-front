@@ -55,7 +55,7 @@
         </accordion>
       </div>
 
-      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey">
+      <div class="sm-col-12 md-col-12 lg-col-4 bg-grey7">
 
         <div class="p3">
           <h1>Dates</h1>
