@@ -61,6 +61,7 @@ input[type="submit"],
 input[type="button"],
 button{
   background: $color-primary;
+  border-radius: $border-radius;
   color:$white;
   display: inline-block;
   flex-grow: 0;

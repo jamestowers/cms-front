@@ -37,7 +37,9 @@ export default {
 
 <style lang="scss">
   @import "~assets/scss/global/variables";
-
+  .nav-header{
+    font-weight: $font-weight-bold;
+  }
   nav.sub-nav{
     max-width:200px;
     ul{

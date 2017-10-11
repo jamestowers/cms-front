@@ -2,6 +2,12 @@
   <div class="content-body bg-white">
     <div class="block-editor border-bottom p3 bg-grey3 text-white">
       <h1 class="page-title m0">Edit block: {{ block.title }}</h1>
+      
+      <div class="form-group pull-right text-right mt1">
+        <button @click="save" class="mr2">Save block</button>
+        <loading v-show="loading" class="pull-right"></loading>
+      </div>
+
       <div class="actions mb2">
         <ul class="inline small m0">
           <li><a href="" class="pr2 is-error">Delete block</a></li>
@@ -27,7 +33,7 @@
 
     <draggable 
       v-model="block.fields" 
-       :options="{draggable:'.drag-handle'}"
+      :options="{draggable:'.drag-handle'}"
       @start="dragging=true" 
       @end="dragging=false">
       <accordion 
@@ -92,7 +98,6 @@ export default {
       this.editedBlock[key] = value
     },
     save () {
-      console.log(this.block.fields[1].options)
       let action = this.editing ? 'updateBlock' : 'createBlock'
       this.$store.dispatch(`content-blocks/${action}`, { id: this.block.id, block: this.block })
     },

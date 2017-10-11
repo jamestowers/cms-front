@@ -59,8 +59,8 @@
         this.isOpen = !this.isOpen
       },
       getHeights () {
-        this.handleHeight = this.$refs.handle.clientHeight
-        this.contentHeight = this.$refs.content.clientHeight
+        this.handleHeight = this.$refs.handle.scrollHeight
+        this.contentHeight = this.$refs.content.scrollHeight
       }
     }
   }

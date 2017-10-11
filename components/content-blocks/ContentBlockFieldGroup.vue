@@ -1,5 +1,5 @@
 <template>
-  <div class="field-editor border-bottom p3 bg-white">
+  <div class="field-editor border-bottom p3">
 
       <div class="form-group">
         <label for="label">Label</label>
@@ -23,6 +23,29 @@
           select-label="Click to select"
           deselect-label="Click to deselect">
         </multiselect>
+      </div>
+
+      <div class="field-children" v-if="field.type === 'field-group'">
+        <label>Fields</label>
+        <draggable 
+          v-model="field.children" 
+          :options="{draggable:'.drag-handle'}"
+          @start="dragging=true" 
+          @end="dragging=false">
+          <accordion 
+            :title="child.label" 
+            handle-class="bg-grey6 px3 py1 m0" 
+            v-for="child in field.children" 
+            :key="child.id"
+            class=" bg-grey8"
+            >
+            <field-editor 
+              :block-id="blockId"
+              :field="child"
+              >
+              </field-editor>
+          </accordion>
+        </draggable>
       </div>
       
       <div v-if="fieldRequiresOptions">
@@ -51,7 +74,7 @@
       </div>
 
       <div class="form-group">
-        <checkbox @input="updateField('required', $event)" :value="field.required" label="Field is required" id="is-required"></checkbox>
+        <checkbox @change="updateField('required', $event)" :value="field.required" label="Field is required" id="is-required"></checkbox>
       </div>
       
   </div>
@@ -60,24 +83,30 @@
 <script>
 import Multiselect from 'vue-multiselect'
 import Checkbox from '~/components/fields/Checkbox.vue'
+import Draggable from 'vuedraggable'
+import Accordion from '~/components/Accordion'
 
 export default {
+  name: 'field-editor',
   props: {
     field: {
       type: Object,
-      default: {
-        content_block_id: this.blockId,
-        label: '',
-        name: '',
-        type: '',
-        description: '',
-        container_class: '',
-        required: false
-      }
+      default: this.emptyField
     },
     blockId: {
       type: Number,
       required: true
+    },
+    emptyField: {
+      content_block_id: this.blockId,
+      parent_field_id: '',
+      label: '',
+      name: '',
+      type: '',
+      description: '',
+      container_class: '',
+      required: false,
+      children: []
     }
   },
 
@@ -89,7 +118,6 @@ export default {
   },
   created () {
     this.setFieldRequiresOptions()
-    // this.renderChoices()
   },
 
   computed: {
@@ -124,6 +152,8 @@ export default {
       this.updatedField[key] = value
       if (key === 'type') {
         this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
+      } else if (key === 'field-group') {
+        this.field.push()
       }
       this.$store.commit('content-blocks/updateField', this.updatedField) // Updates store only
       // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
@@ -136,45 +166,7 @@ export default {
 
     setFieldRequiresOptions () {
       this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(this.field.type)
-      /* if (this.field.options) {
-        this.renderChoices()
-      } */
     },
-
-    /* renderChoices () {
-      let options = ''
-      for (let opt in this.field.options) {
-        options += `${this.field.options[opt].key}:${this.field.options[opt].value}\n`
-      }
-      this.updatedField.options = options
-    },
-
-    parseChoices (options) {
-      let choices = []
-      let parts = options.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
-      for (var i = 0, len = parts.length; i < len; i++) {
-        var match = parts[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
-        choices.push({
-          key: match[1],
-          value: match[2]
-        })
-      }
-      return choices
-    }, */
-
-    /* prepareParams () {
-      this.updatedField['content_block_id'] = this.$route.params.block
-      if (this.fieldRequiresOptions) {
-        this.updatedField.options = this.parseChoices()
-        // delete this.updatedField.options
-      }
-    },
-
-    save () {
-      this.prepareParams()
-      let action = this.editing ? 'updateField' : 'createField'
-      this.$store.dispatch(`content-blocks/${action}`, { id: this.field.id, fields: this.updatedField })
-    }, */
 
     deleteField () {
       this.$store.dispatch(`content-blocks/deleteField`, this.field)
@@ -184,7 +176,10 @@ export default {
 
   components: {
     Checkbox,
-    Multiselect
+    Multiselect,
+    Draggable,
+    Accordion,
+    'field-editor': this
   }
 }
 </script>

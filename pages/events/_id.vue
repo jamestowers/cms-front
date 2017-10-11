@@ -1,6 +1,6 @@
 <template>
     
-  <form action="" method="post">
+  <form action="" method="post" class="flex-row">
 
     <div v-if="event && event.images" class="hero sm-col-12 md-col-12 lg-col-12 mxn2 text-center">
       <img :src="`${this.$store.state.settings.items.image_root_path}/${event.images.xlarge}`" alt="Event hero image">
@@ -8,7 +8,7 @@
 
     <div class="clearfix mxn2 flex">
 
-      <div class="sm-col-12 md-col-12 lg-col-8 px3 pt3">
+      <div class="sm-col-12 md-col-12 lg-col-8 pl4 pr2 pt3">
         <page-title>{{ editing ? `Edit ${event.title}` : 'Add a new event' }}</page-title>
 
         <div class="form-group mb0">

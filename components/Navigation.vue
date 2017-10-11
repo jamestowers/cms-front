@@ -1,31 +1,31 @@
 <template>
-    <nav id="admin-nav">
-        <ul>
-            <li><nuxt-link to="/"><i class="icon-basic-accelerator "></i> Dashboard</nuxt-link></li>
+    <nav id="admin-nav" class="bg-grey2">
+      <ul>
+        <li><nuxt-link to="/dashboard"><i class="icon-basic-accelerator "></i> Dashboard</nuxt-link></li>
+        <li>
+          <nuxt-link to="/pages"><i class="icon-basic-spread "></i> Pages</nuxt-link>
+          <ul>
             <li>
-              <nuxt-link to="/pages"><i class="icon-basic-spread "></i> Pages</nuxt-link>
-              <ul>
-                <li>
-                  <nuxt-link to="/pages/new"><i class="icon-basic-book-pencil "></i> Add new</nuxt-link>
-                </li>
-              </ul>
+              <nuxt-link to="/pages/new"><i class="icon-basic-book-pencil "></i> Add new</nuxt-link>
             </li>
+          </ul>
+        </li>
+        <li>
+          <nuxt-link to="/posts"><i class="icon-basic-book-pencil "></i> Posts</nuxt-link>
+          <ul>
             <li>
-              <nuxt-link to="/posts"><i class="icon-basic-book-pencil "></i> Posts</nuxt-link>
-              <ul>
-                <li>
-                  <nuxt-link to="/posts/new"><i class="icon-basic-book-pencil "></i> Add new</nuxt-link>
-                </li>
-              </ul>
+              <nuxt-link to="/posts/new"><i class="icon-basic-book-pencil "></i> Add new</nuxt-link>
             </li>
-            <li><nuxt-link to="/transactions"><i class="icon-basic-bolt "></i> Transactions</nuxt-link></li>
-            <li><nuxt-link to="/users"><i class="icon-basic-postcard-multiple "></i> Users</nuxt-link></li>
-            <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
-            <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
-            <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
-            <li><nuxt-link to="/blocks"><i class="icon-basic-hammer "></i> Content blocks</nuxt-link></li>
-            <li v-if="$store.getters['auth/loggedIn']"><nuxt-link to="/auth/logout"><i class="icon-basic-lock "></i> Logout</nuxt-link></li>
-        </ul>
+          </ul>
+        </li>
+        <li><nuxt-link to="/transactions"><i class="icon-basic-bolt "></i> Transactions</nuxt-link></li>
+        <li><nuxt-link to="/users"><i class="icon-basic-postcard-multiple "></i> Users</nuxt-link></li>
+        <li><nuxt-link to="/events"><i class="icon-basic-geolocalize-05 "></i> Events</nuxt-link></li>
+        <li><nuxt-link to="/media"><i class="icon-basic-picture-multiple "></i> Media</nuxt-link></li>
+        <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
+        <li><nuxt-link to="/blocks"><i class="icon-basic-hammer "></i> Content blocks</nuxt-link></li>
+        <li v-if="$store.getters['auth/loggedIn']"><nuxt-link to="/auth/logout"><i class="icon-basic-lock "></i> Logout</nuxt-link></li>
+      </ul>
     </nav>
 </template>
 
@@ -124,7 +124,6 @@ nav{
   }
 }
 nav#admin-nav{
-  background: $grey2;
   flex: 0 0 $nav-width;
   z-index: 11;
   ul{
