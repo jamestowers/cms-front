@@ -1,7 +1,12 @@
 <template>
   <div class="checkbox">
-    <span class="checkbox-runner"></span>
-    <input @change="updateValue" type="checkbox" :value="value" :checked="isChecked" :id="id" />
+    <span class="checkbox-runner" :style="{ backgroundColor: this.runnerColor }"></span>
+    <input 
+      type="checkbox" 
+      :checked="shouldBeChecked" 
+      :value="value" 
+      @change="updateInput"
+      :id="id" />
     <div>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><polyline points="13 33 25 45 49 21 " style="fill:none;stroke-linejoin:bevel;stroke-width:4;"/></svg>
     </div>
@@ -10,10 +15,16 @@
 </template>
 
 <script>
+// see: https://www.smashingmagazine.com/2017/08/creating-custom-inputs-vue-js/
 export default {
+  model: {
+    prop: 'modelValue',
+    event: 'change'
+  },
   props: {
-    value: {
-      type: [String, Number, Boolean]
+    value: [String, Number],
+    modelValue: {
+      default: false
     },
     id: {
       type: String,
@@ -22,19 +33,59 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    trueValue: {
+      type: Boolean,
+      default: true
+    },
+    falseValue: {
+      type: Boolean,
+      default: false
+    },
+    runnerColor: {
+      type: String,
+      default: '#EBEFF2'
     }
   },
 
   data () {
     return {
-      isChecked: this.value
+      isChecked: '0'
+    }
+  },
+
+  computed: {
+    shouldBeChecked () {
+      if (this.modelValue instanceof Array) {
+        return this.modelValue.includes(this.value)
+      }
+      // Note that `true-value` and `false-value` are camelCase in the JS
+      return this.modelValue === this.trueValue
     }
   },
 
   methods: {
-    updateValue () {
-      this.isChecked = !this.isChecked
+    /* onChange (e) {
+      this.isChecked = e.target.checked ? '1' : '0'
+      // this.isChecked = !this.isChecked
       this.$emit('input', this.isChecked)
+    } */
+    updateInput (event) {
+      let isChecked = event.target.checked
+
+      if (this.modelValue instanceof Array) {
+        let newValue = [...this.modelValue]
+
+        if (isChecked) {
+          newValue.push(this.value)
+        } else {
+          newValue.splice(newValue.indexOf(this.value), 1)
+        }
+
+        this.$emit('change', newValue)
+      } else {
+        this.$emit('change', isChecked ? this.trueValue : this.falseValue)
+      }
     }
   }
 }
@@ -77,7 +128,6 @@ export default {
       }
     }
     .checkbox-runner{
-      background: $grey7;
       border-radius: 20px;
       height:20px;
       position: absolute;

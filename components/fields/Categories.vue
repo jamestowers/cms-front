@@ -1,15 +1,14 @@
 <template>
   <div class="category-select">
     <ul class="category-list">
-      <li v-for="cat in categories" :key="cat.id" class="checkbox checkbox-small">
-        <input 
-          type="checkbox" 
-          v-model="selected" 
-          :value="cat.id" 
+      <li v-for="cat in categories" :key="cat.id" class="">
+        <checkbox 
+          v-model="selected"
+          :value="cat.id"
+          :label="cat.title"
           :id="`categories_${cat.id}`"
-           />
-        <div></div>
-        <label :for="`categories_${cat.id}`">{{ cat.title }}</label>
+          runner-color="#F9FCFE"
+          ></checkbox>
       </li>
     </ul>
 
@@ -31,6 +30,7 @@
 
 <script>
   import Multiselect from 'vue-multiselect'
+  import Checkbox from '~/components/fields/Checkbox'
 
   export default {
     props: ['default'],
@@ -57,6 +57,9 @@
     },
 
     methods: {
+      onChange (value) {
+        console.log(value)
+      },
       resetNewCategory () {
         this.newCategory = {
           title: null,
@@ -81,7 +84,8 @@
     },
 
     components: {
-      Multiselect
+      Multiselect,
+      Checkbox
     }
   }
 </script>
