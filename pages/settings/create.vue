@@ -1,6 +1,6 @@
 <template>
   <div class="flex mxn2">
-    <div class="py3 px3 sm-col-12 md-col-8 lg-col-8">
+    <div class="p3 pl4 sm-col-12 md-col-8 lg-col-8">
       <page-title>Add a new setting</page-title>
 
       <div class="mb2 pt2 border-top group">
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="p3 sm-col-12 md-col-4 lg-col-4 bg-grey">
+    <div class="p3 sm-col-12 md-col-4 lg-col-4 bg-grey7">
       
       <h2><i class="big icon-basic-pin2 v-align"></i> Hint</h2>
       <p>Spicy jalapeno et minim esse, cupidatat in cow andouille irure corned beef culpa in sirloin lorem. Dolor ullamco in, landjaeger flank fatback qui aute cillum tongue cupim sirloin occaecat strip steak. Cillum alcatra ham kielbasa salami duis, veniam ullamco in kevin short loin sed ham hock. Tongue cupidatat qui nisi boudin salami pancetta mollit, pork chop proident aute strip steak. Esse pork belly in, pastrami fugiat elit flank strip steak sirloin eiusmod ut.</p>

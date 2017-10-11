@@ -1,12 +1,12 @@
 <template>
   <div class="flex mxn2">
-    <div class="py3 px3 sm-col-12 md-col-8 lg-col-8">
+    <div class="p3 pl4 sm-col-12 md-col-8 lg-col-8">
         <page-title>Settings</page-title>
 
         <div class="group mb2">
           <form @submit.prevent="save" action="">
             
-            <div v-for="setting in settings" :key="setting.id">
+            <div v-for="setting in settings" :key="setting.id" class="mb2 pb2 border-bottom">
               <custom-field v-model="editedFields[setting.key]" :field="setting"></custom-field>
               <nuxt-link to="/settings/create" class="small">Edit setting</nuxt-link>
             </div>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="p3 sm-col-12 md-col-4 lg-col-4 bg-grey">
+    <div class="p3 sm-col-12 md-col-4 lg-col-4 bg-grey7">
       <h2><i class="big icon-basic-pin2 v-align"></i> Hint</h2>
       <p>Modify various settings for the site here.</p>
 
