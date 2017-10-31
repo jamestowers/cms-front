@@ -35,6 +35,8 @@
           :index-from-root="`${indexFromRoot}[${fieldIndex}].children`"
           ></content-block-field-repeater>
 
+        <a @click="addField" href="javascript:void(0)" role="button" class="btn-sm pull-right">Add field</a>
+
       </div>
 
       <!-- handle field options/choices -->
@@ -92,24 +94,24 @@ export default {
     indexFromRoot: {
       type: String,
       required: true
-    },
-    emptyField: {
-      content_block_id: this.blockId,
-      parent_field_id: '',
-      label: '',
-      name: '',
-      type: '',
-      description: '',
-      container_class: '',
-      required: false,
-      children: []
     }
   },
 
   data () {
     return {
       updatedField: _.clone(this.field),
-      fieldRequiresOptions: false
+      fieldRequiresOptions: false,
+      emptyField: {
+        content_block_id: this.blockId,
+        parent_field_id: '',
+        label: '',
+        name: '',
+        type: '',
+        description: '',
+        container_class: '',
+        required: 1,
+        children: []
+      }
     }
   },
 
@@ -152,7 +154,7 @@ export default {
   methods: {
     updateField (key, value) {
       this.updatedField[key] = value
-      // console.log(this.updatedField.label)
+
       if (key === 'type') {
         this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
       } else if (key === 'field-group') {
@@ -165,6 +167,15 @@ export default {
         fieldIndex: this.fieldIndex
       }) // Updates store only
       // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
+    },
+
+    addField () {
+      this.$store.commit('content-blocks/addField', {
+        field: this.emptyField,
+        parentGroup: this.indexFromRoot,
+        parentIndex: this.fieldIndex
+      })
+      // this.updatedField.children.push(this.emptyField)
     },
 
     parseChoicesThenUpdateField (key, value) {

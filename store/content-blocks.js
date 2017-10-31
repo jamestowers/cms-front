@@ -34,8 +34,11 @@ export const mutations = {
   },
 
   // ------ FIELDS ------ //
-  addField (state, field) {
-    state.items.find((x) => x.id === field.content_block_id).fields.push(field)
+  addField (state, { field, parentGroup, parentIndex }) {
+    // eslint-disable-next-line
+    const fieldGroup = eval('state.items' + parentGroup)
+    console.log(fieldGroup)
+    fieldGroup[parentIndex].children.push(field)
   },
 
   updateField (state, { field, parentGroupIndex, fieldIndex }) {
