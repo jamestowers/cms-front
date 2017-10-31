@@ -1,5 +1,5 @@
 <template>
-  <div id="login-panel" class="px4 py3 group">
+  <div id="login-panel" class="px4 py3 group text-white">
     <div class="text-center">
       <h1 class="mb0">Log in</h1>
     </div>
