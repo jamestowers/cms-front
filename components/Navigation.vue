@@ -25,6 +25,7 @@
         <li><nuxt-link to="/settings"><i class="icon-basic-gear "></i> Settings</nuxt-link></li>
         <li><nuxt-link to="/blocks"><i class="icon-basic-hammer "></i> Content blocks</nuxt-link></li>
         <li v-if="$store.getters['auth/loggedIn']"><nuxt-link to="/auth/logout"><i class="icon-basic-lock "></i> Logout</nuxt-link></li>
+        <li v-else><nuxt-link to="/auth/login"><i class="icon-basic-lock-open "></i> Login</nuxt-link></li>
       </ul>
     </nav>
 </template>
