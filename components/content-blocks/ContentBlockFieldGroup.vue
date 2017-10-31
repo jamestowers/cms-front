@@ -24,30 +24,20 @@
           deselect-label="Click to deselect">
         </multiselect>
       </div>
-
+      
+      <!-- Handle repeater field -->
       <div class="field-children" v-if="field.type === 'field-group'">
         <label>Fields</label>
-        <draggable 
+
+        <content-block-field-repeater 
           v-model="field.children" 
-          :options="{draggable:'.drag-handle'}"
-          @start="dragging=true" 
-          @end="dragging=false">
-          <accordion 
-            :title="child.label" 
-            handle-class="bg-grey6 px3 py1 m0" 
-            v-for="child in field.children" 
-            :key="child.id"
-            class=" bg-grey8"
-            >
-            <field-editor 
-              :block-id="blockId"
-              :field="child"
-              >
-              </field-editor>
-          </accordion>
-        </draggable>
+          :block-id="blockId"
+          :index-from-root="`${indexFromRoot}[${fieldIndex}].children`"
+          ></content-block-field-repeater>
+
       </div>
-      
+
+      <!-- handle field options/choices -->
       <div v-if="fieldRequiresOptions">
         <div class="form-group">
           <label for="description">Choices</label>
@@ -83,18 +73,24 @@
 <script>
 import Multiselect from 'vue-multiselect'
 import Checkbox from '~/components/fields/Checkbox.vue'
-import Draggable from 'vuedraggable'
-import Accordion from '~/components/Accordion'
 
 export default {
-  name: 'field-editor',
+  name: 'content-block-field-group',
   props: {
     field: {
       type: Object,
       default: this.emptyField
     },
+    fieldIndex: {
+      type: Number,
+      required: true
+    },
     blockId: {
       type: Number,
+      required: true
+    },
+    indexFromRoot: {
+      type: String,
       required: true
     },
     emptyField: {
@@ -116,8 +112,14 @@ export default {
       fieldRequiresOptions: false
     }
   },
+
   created () {
     this.setFieldRequiresOptions()
+  },
+
+  updated () {
+    console.log('updated:', this.field.label)
+    this.updatedField = _.clone(this.field)
   },
 
   computed: {
@@ -150,12 +152,18 @@ export default {
   methods: {
     updateField (key, value) {
       this.updatedField[key] = value
+      // console.log(this.updatedField.label)
       if (key === 'type') {
         this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
       } else if (key === 'field-group') {
-        this.field.push()
+        this.field.push(this.emptyField)
       }
-      this.$store.commit('content-blocks/updateField', this.updatedField) // Updates store only
+
+      this.$store.commit('content-blocks/updateField', {
+        field: this.updatedField,
+        parentGroupIndex: this.indexFromRoot,
+        fieldIndex: this.fieldIndex
+      }) // Updates store only
       // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
     },
 
@@ -176,10 +184,7 @@ export default {
 
   components: {
     Checkbox,
-    Multiselect,
-    Draggable,
-    Accordion,
-    'field-editor': this
+    Multiselect
   }
 }
 </script>

@@ -34,15 +34,14 @@ export const mutations = {
   },
 
   // ------ FIELDS ------ //
-
   addField (state, field) {
     state.items.find((x) => x.id === field.content_block_id).fields.push(field)
   },
 
-  updateField (state, field) {
-    let blockIndex = state.items.findIndex((x) => x.id === field.content_block_id)
-    let index = state.items[blockIndex].fields.findIndex((x) => x.id === field.id)
-    state.items[blockIndex].fields.splice(index, 1, field)
+  updateField (state, { field, parentGroupIndex, fieldIndex }) {
+    // eslint-disable-next-line
+    const fieldGroup = eval('state.items' + parentGroupIndex)
+    fieldGroup.splice(fieldIndex, 1, field)
   },
 
   deleteField (state, field) {

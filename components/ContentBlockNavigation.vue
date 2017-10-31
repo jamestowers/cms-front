@@ -5,7 +5,7 @@
     <ul class="bg-grey7 text-center">
       <li class="nav-header p2 text-center bg-grey5 text-white">Blocks</li>
       <draggable 
-        v-model="block" 
+        v-model="blocks" 
         @start="dragging=true" 
         @end="dragging=false"
         >
