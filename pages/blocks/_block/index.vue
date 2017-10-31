@@ -31,25 +31,12 @@
       </div>
     </div>
 
-    <draggable 
-      v-model="block.fields" 
-      :options="{draggable:'.drag-handle'}"
-      @start="dragging=true" 
-      @end="dragging=false">
-      <accordion 
-        :title="field.label" 
-        handle-class="bg-grey6 px3 py1 m0" 
-        v-for="field in block.fields" 
-        :key="field.id"
-        class=""
-        >
-        <content-block-field-group 
-          :block-id="block.id"
-          :field="field"
-          >
-          </content-block-field-group>
-      </accordion>
-    </draggable>
+    <content-block-field-repeater 
+      class="content-block-field-editor"
+      v-model="block.fields"
+      :block-id="block.id"
+      :index-from-root="`[${blockIndex}].fields`"
+      ></content-block-field-repeater>
 
     <div class="form-group text-right mt1">
       <button @click="save" class="mr2">Save block</button>
@@ -62,9 +49,6 @@
 
 <script>
 import Loading from '~/components/Loading'
-import Draggable from 'vuedraggable'
-import ContentBlockFieldGroup from '~/components/content-blocks/ContentBlockFieldGroup'
-import Accordion from '~/components/Accordion'
 
 export default {
   data () {
@@ -80,12 +64,17 @@ export default {
   },
 
   computed: {
+    blockIndex () {
+      if (!isNaN(this.$route.params.block)) {
+        return this.$store.state['content-blocks'].items.findIndex((x) => x.id === Number(this.$route.params.block))
+      }
+    },
     block () {
       if (isNaN(this.$route.params.block)) {
         return this.emptyBlock
       } else {
-        return this.$store.state['content-blocks']
-          .items.find(x => x.id === Number(this.$route.params.block))
+        return this.$store.state['content-blocks'].items[this.blockIndex]
+        // .items.find(x => x.id === Number(this.$route.params.block))
       }
     },
     editing () {
@@ -108,10 +97,7 @@ export default {
   },
 
   components: {
-    Loading,
-    ContentBlockFieldGroup,
-    Accordion,
-    Draggable
+    Loading
   }
 }
 </script>
@@ -119,5 +105,10 @@ export default {
 <style lang="scss">
   .block-edit{
     flex: 1;
+  }
+  .content-block-field-editor{
+    .accordion{
+      margin-bottom: 4px;
+    }
   }
 </style>
