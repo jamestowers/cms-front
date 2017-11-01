@@ -43,7 +43,7 @@
       <div v-if="fieldRequiresOptions">
         <div class="form-group">
           <label for="description">Choices</label>
-          <textarea @blur.stop="choices = $event.target.value" :value="choices" name="options" id="options"></textarea>
+          <textarea @blur.stop="parseChoicesThenUpdateField('options', $event.target.value)" :value="choices" name="options" id="options"></textarea>
           <div class="help-block">Enter possible choices in the format <code>value:label</code>, one per line. eg: <code>m:Male</code> </div>
         </div>
 
@@ -101,6 +101,9 @@ export default {
     return {
       updatedField: _.clone(this.field),
       fieldRequiresOptions: false,
+
+      choices: '',
+
       emptyField: {
         content_block_id: this.blockId,
         parent_field_id: '',
@@ -116,42 +119,31 @@ export default {
   },
 
   created () {
-    this.setFieldRequiresOptions()
+    this.reset()
   },
 
   updated () {
-    console.log('updated:', this.field.label)
-    this.updatedField = _.clone(this.field)
+    this.reset()
   },
 
   computed: {
-    editing () {
+    /* editing () {
       return this.field.id !== undefined
-    },
-    choices: {
-      get () {
-        let options = ''
-        for (let opt in this.updatedField.options) {
-          options += `${this.updatedField.options[opt].key}:${this.updatedField.options[opt].value}\n`
-        }
-        return options
-      },
-      set (newValue) {
-        let choices = []
-        let parts = newValue.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
-        for (var i = 0, len = parts.length; i < len; i++) {
-          var match = parts[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
-          choices.push({
-            key: match[1],
-            value: match[2]
-          })
-        }
-        this.updateField('options', choices)
-      }
-    }
+    }, */
   },
 
   methods: {
+    reset () {
+      // Need to re-clone the field as it gets updated whenever 
+      // store is updated. This avoids the "Do not mutate vuex 
+      // store state outside mutation handlers" error
+      this.updatedField = _.clone(this.field)
+
+      this.setFieldRequiresOptions()
+
+      this.renderChoices(this.updatedField)
+    },
+
     updateField (key, value) {
       this.updatedField[key] = value
 
@@ -167,6 +159,12 @@ export default {
         fieldIndex: this.fieldIndex
       }) // Updates store only
       // this.$store.dispatch('content-blocks/updateField', this.updatedField) // Updates store and persists to DB
+
+      // Do this AFTER the commit above so that the empty field isnt committed
+      // until the updated field comes back from store
+      if (key === 'type') {
+        this.handleTypeChange(key, value)
+      }
     },
 
     addField () {
@@ -178,18 +176,56 @@ export default {
       // this.updatedField.children.push(this.emptyField)
     },
 
+    handleTypeChange (key, value) {
+      // Add option panel if field type requires it
+      // this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
+      this.setFieldRequiresOptions(value)
+
+      // If we've switched to a field-group type, then add an empty field to the
+      // field children array, but only if there isnt already at least one child field
+      if (value === 'field-group' && !this.updatedField.children.length) {
+        this.addField()
+      }
+    },
+
+    renderChoices (field = this.updatedField) {
+      //  Parse the data from the server into the format used in the
+      // textarea of the edit window - it takes the json and returns key/value pairs
+      // one per line and in key:value format
+      let options = ''
+      if (field.options) {
+        for (let opt in field.options) {
+          options += `${field.options[opt].key}:${field.options[opt].value}\n`
+        }
+      }
+      this.choices = options
+    },
+
+    parseChoices (newValue) {
+      // Does the reverse of renderChoices() and takes the value of the textarea, 
+      // splits it into key:value pairs and pushes the key value pairs into an 
+      // array ready for submitting to the server as json
+      let choices = []
+      let lines = newValue.replace(/^\s+|,\s*$/g, '').split('\n').filter(n => n)
+      for (var i = 0, len = lines.length; i < len; i++) {
+        var match = lines[i].match(/^\s*"?([^":]*)"?\s*:\s*"?([^"]*)\s*$/)
+        choices.push({
+          key: match[1],
+          value: match[2]
+        })
+      }
+      return choices
+    },
+
     parseChoicesThenUpdateField (key, value) {
       let options = this.parseChoices(value)
       this.updateField(key, options)
     },
 
-    setFieldRequiresOptions () {
-      this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(this.field.type)
-    },
-
-    deleteField () {
-      this.$store.dispatch(`content-blocks/deleteField`, this.field)
-      this.$nuxt.$router.replace({ name: 'blocks-block', params: {block: this.field.content_block_id} })
+    setFieldRequiresOptions (value = this.field.type) {
+      // eslint-disable-next-line
+      // value = (typeof value !== 'undefined') ? value : this.field.type
+      this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
     }
   },
 
