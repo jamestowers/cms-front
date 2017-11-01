@@ -116,10 +116,10 @@ export default {
         parent_field_id: '',
         label: '',
         name: '',
-        type: '',
+        type: 'text',
         description: '',
         container_class: '',
-        required: 1,
+        required: 0,
         children: []
       }
     }
