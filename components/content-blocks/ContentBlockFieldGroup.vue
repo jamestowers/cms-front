@@ -83,6 +83,8 @@ export default {
       type: Object,
       default: this.emptyField
     },
+    // Field Index is used to target the field when updatig it frm the $store actions
+    // it is apoended to the end of indexFromRoot
     fieldIndex: {
       type: Number,
       required: true
@@ -91,6 +93,10 @@ export default {
       type: Number,
       required: true
     },
+    // Index from root tracks the nesting index of each field's parent group
+    // so that we can pass it to the $store action in order to update the 
+    // field - it is appended to this.$store.state['content-blocks'].items
+    // should be string like: [0] or [6].fields[0].children
     indexFromRoot: {
       type: String,
       required: true
