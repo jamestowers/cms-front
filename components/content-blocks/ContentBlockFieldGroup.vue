@@ -106,6 +106,7 @@ export default {
   data () {
     return {
       updatedField: _.clone(this.field),
+
       fieldRequiresOptions: false,
 
       choices: '',
@@ -153,12 +154,6 @@ export default {
     updateField (key, value) {
       this.updatedField[key] = value
 
-      if (key === 'type') {
-        this.fieldRequiresOptions = ['select', 'radio', 'checkbox'].includes(value)
-      } else if (key === 'field-group') {
-        this.field.push(this.emptyField)
-      }
-
       this.$store.commit('content-blocks/updateField', {
         field: this.updatedField,
         parentGroupIndex: this.indexFromRoot,
@@ -180,6 +175,11 @@ export default {
         parentIndex: this.fieldIndex
       })
       // this.updatedField.children.push(this.emptyField)
+    },
+
+    deleteField () {
+      this.$store.dispatch(`content-blocks/deleteField`, this.field)
+      this.$nuxt.$router.replace({ name: 'blocks-block', params: {block: this.field.content_block_id} })
     },
 
     updateLabel (value) {
