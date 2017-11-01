@@ -3,7 +3,7 @@
 
       <div class="form-group">
         <label for="label">Label</label>
-        <input @blur.stop="updateField('label', $event.target.value)" :value="field.label" placeholder="Enter a title for this field" type="text" name="label" id="label" />
+        <input @blur.stop="updateLabel($event.target.value)" :value="field.label" placeholder="Enter a title for this field" type="text" name="label" id="label" />
       </div>
 
       <div class="form-group">
@@ -174,6 +174,19 @@ export default {
         parentIndex: this.fieldIndex
       })
       // this.updatedField.children.push(this.emptyField)
+    },
+
+    updateLabel (value) {
+      this.updateField('label', value)
+
+      // Need to wait until $nextTick here iter wise we get "Do not mutate vuex 
+      // store state outside mutation handlers" error because the next updatefield
+      // is done before the previous one has finished
+      this.$nextTick(() => {
+        if (this.updatedField.name === null || this.updatedField.name === '') {
+          this.updateField('name', _.snakeCase(value))
+        }
+      })
     },
 
     handleTypeChange (key, value) {
