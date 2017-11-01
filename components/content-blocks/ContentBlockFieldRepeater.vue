@@ -5,7 +5,7 @@
       @start="dragging=true" 
       @end="dragging=false">
       <accordion 
-        :title="`${index+1} - ${field.label}`" 
+        :title="field.label ? `${index+1} - ${field.label}` : `New field`" 
         handle-class="bg-grey6 px3 py1 m0" 
         v-for="(field, index) in value" 
         :key="field.id"
